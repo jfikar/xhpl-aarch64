@@ -1,7 +1,7 @@
 # xhpl-aarch64 
 ## Compiled [HPL (High-Performance Linpack Benchmark)](https://netlib.org/benchmark/hpl/) for Linux on ARM64 (AARCH64)
 
-[HPL](https://en.wikipedia.org/wiki/LINPACK_benchmarks) is used by [top500.org](https://www.top500.org/) to rank the world fastest supercomputers by [FLOPs](https://en.wikipedia.org/wiki/FLOPS) (floating points operations per second). It can also be used to test the stability of your CPU, CPU cache, RAM, and the power supply as the HPL is quite demanding and does also result verification (see PASSED/FAILED below). On the other hand, HPL is not so good for thermal testing. The CPU gets really hot diring the calculation phase, but it cools down a bit during the verification phase.
+[HPL](https://en.wikipedia.org/wiki/LINPACK_benchmarks) is used by [top500.org](https://www.top500.org/) to rank the world fastest supercomputers by [FLOPs](https://en.wikipedia.org/wiki/FLOPS) (floating points operations per second). It can also be used to test the stability of your CPU, CPU frequency throttling, CPU cache, RAM, and the power supply as the HPL is quite demanding and does also result verification (see PASSED/FAILED below). On the other hand, HPL is not so good for testing the maximum temperature. The CPU gets really hot during the calculation phase, but it cools down a bit during the verification phase.
 
 The best FLOPs for ARM64 (probably for other archs as well) are obtained using [OpenBLAS library](https://www.openblas.net/), but do not use the library compiled by your distribution. For better results compile it yourself or use the provided binaries. Alternatively one can use [BLIS libraries](https://github.com/flame/blis) or any other BLAS implementation, but it results in less FLOPs.
 
@@ -80,13 +80,15 @@ HPL.out     output file name (if any)
 
 The parameter `Ns` is the size of the square matrix Ns x Ns. The memory consumption is thus proportional to Ns^2. Ns=20000 needs around 4GB RAM, for 8GB use 28000, for 2GB use 14000, and for 1GB 10000. Try to use all the RAM as it improves the FLOPs.
 
-| RAM (GB)  | Ns |
+| RAM (GB)  | optimal Ns |
 | ------------- | ------------- |
+| 0.5| 7000   |
 | 1  | 10000  |
 | 2  | 14000  |
 | 4  | 20000  |
 | 8  | 28000  |
 | 16 | 40000  |
+| 32 | 57000  |
 
 The parameters NB determines, how big blocks are used for calculation. Its optimisation is a bit of a guesswork. It probably depends a lot on CPU caches and RAM speed. So it the example file you have 12 different NBs. The HPL will run for all of them and you can choose the one with highest FLOPs.
 
