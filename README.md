@@ -1,7 +1,7 @@
 # xhpl-aarch64 
 ## Compiled [HPL (High-Performance Linpack Benchmark)](https://netlib.org/benchmark/hpl/) for Linux on ARM64 (AARCH64)
 
-[HPL](https://en.wikipedia.org/wiki/LINPACK_benchmarks) is used by [top500.org](https://www.top500.org/) to rank the world fastest supercomputers by [FLOPs](https://en.wikipedia.org/wiki/FLOPS) (floating points operations per second). It can also be used to test the stability of your CPU, CPU cache, RAM, and the power supply as the HPL is quite demanding and does also result verification (see PASSED/FAILED below).
+[HPL](https://en.wikipedia.org/wiki/LINPACK_benchmarks) is used by [top500.org](https://www.top500.org/) to rank the world fastest supercomputers by [FLOPs](https://en.wikipedia.org/wiki/FLOPS) (floating points operations per second). It can also be used to test the stability of your CPU, CPU cache, RAM, and the power supply as the HPL is quite demanding and does also result verification (see PASSED/FAILED below). On the other hand, HPL is not so good for thermal testing. The CPU gets really hot diring the calculation phase, but it cools down a bit during the verification phase.
 
 The best FLOPs for ARM64 (probably for other archs as well) are obtained using [OpenBLAS library](https://www.openblas.net/), but do not use the library compiled by your distribution. For better results compile it yourself or use the provided binaries. Alternatively one can use [BLIS libraries](https://github.com/flame/blis) or any other BLAS implementation, but it results in less FLOPs.
 
