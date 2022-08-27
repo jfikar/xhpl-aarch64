@@ -1,0 +1,139 @@
+# xhpl-aarch64 
+## Compiled HPL (High-Performance Linpack Benchmark) for Linux on ARM64 (AARCH64)
+
+The best FLOPs are obtained using OpenBLAS library, but do not use the library compiled by your distribution. For better results compile it yourself or use the provided binaries. Alternatively one can use BLIS libraries, but it results in less FLOPs.
+
+## How to compile yourself
+
+### Compile OpenBLAS
+```
+sudo apt install -y libopenmpi-dev
+wget https://github.com/xianyi/OpenBLAS/archive/refs/tags/v0.3.21.tar.gz
+tar xvf v0.3.20.tar.gz
+cd OpenBLAS-0.3.20
+make -j$(nproc) TARGET=CORTEXA53
+make PREFIX=/home/<username>/openblas install
+rm ~/openblas/lib/*so*
+```
+The possible TARGETs are listed in file `TargetList.txt`. For us there is CORTEXA53, CORTEXA55, CORTEXA57, CORTEXA72, and CORTEXA73.
+
+We deleted the shared libraries (so) in order to link the OpenBLAS statically to the final xhpl binary.
+
+### Compile HPL
+```
+sudo apt install -y libopenmpi-dev
+wget https://www.netlib.org/benchmark/hpl/hpl-2.3.tar.gz
+tar xvf hpl-2.3.tar.gz
+cd hpl-2.3
+LDFLAGS='-L/home/<username>/openblas/lib' ./configure
+make -j$(nproc)
+```
+
+The resulting binary is `hpl-2.3/testing/xhpl`
+
+It turns out that the binary for CORTEX-A53 and CORTEXA55 are the same. And CORTEX57 and CORTEX72 are identical as well. It is so because HPL uses just a few functions from OpenBLAS, which are for those tatgets identical.
+
+## Using precompiled binaries
+
+As said above, the CORTEX-A53 and CORTEX-A55 are the same as well as the CORTEX-A57 and CORTEX-A72 are the same.
+
+You need openmpi library, even though we will not run it in MPI mode but in OpenMP mode, which automatically will use all the cores. If you want to use MPI, then change P and Q in HPL.dat.
+```
+sudo apt install openmpi-bin
+```
+You need to create a text file `HPL.dat` file, for example like this:
+```
+HPLinpack benchmark input file
+Innovative Computing Laboratory, University of Tennessee
+HPL.out     output file name (if any)
+6           device out (6=stdout,7=stderr,file)
+1           # of problems sizes (N)
+28000       Ns
+12          # of NBs
+32 48 64 80 96 112 128 144 160 176 192 208 NBs
+0           PMAP process mapping (0=Row-,1=Column-major)
+1           # of process grids (P x Q)
+1           Ps
+1           Qs
+16.0        threshold
+1           # of panel fact
+1           PFACTs (0=left, 1=Crout, 2=Right)
+1           # of recursive stopping criterium
+4           NBMINs (>= 1)
+1           # of panels in recursion
+2           NDIVs
+1           # of recursive panel fact.
+2           RFACTs (0=left, 1=Crout, 2=Right)
+1           # of broadcast
+0           BCASTs (0=1rg,1=1rM,2=2rg,3=2rM,4=Lng,5=LnM)
+1           # of lookahead depth
+0           DEPTHs (>=0)
+2           SWAP (0=bin-exch,1=long,2=mix)
+8           swapping threshold
+0           L1 in (0=transposed,1=no-transposed) form
+0           U  in (0=transposed,1=no-transposed) form
+1           Equilibration (0=no,1=yes)
+8           memory alignment in double (> 0)
+```
+
+The parameter `Ns` 20000 needs around 4GB RAM, for 8GB use 28000, for 2GB use 14000, and for 1GB 10000. Try to use all the RAM as it improves the FLOPs.
+
+
+Then just run `xhpl`. Sample output:
+```
+HPLinpack 2.3  --  High-Performance Linpack benchmark  --   December 2, 2018
+Written by A. Petitet and R. Clint Whaley,  Innovative Computing Laboratory, UTK
+Modified by Piotr Luszczek, Innovative Computing Laboratory, UTK
+Modified by Julien Langou, University of Colorado Denver
+================================================================================
+
+An explanation of the input/output parameters follows:
+T/V    : Wall time / encoded variant.
+N      : The order of the coefficient matrix A.
+NB     : The partitioning blocking factor.
+P      : The number of process rows.
+Q      : The number of process columns.
+Time   : Time in seconds to solve the linear system.
+Gflops : Rate of execution for solving the linear system.
+
+The following parameter values will be used:
+
+N      :   20000
+NB     :      32       48       64       80       96      112      128      144
+             160      176      192      208
+PMAP   : Row-major process mapping
+P      :       1
+Q      :       1
+PFACT  :   Crout
+NBMIN  :       4
+NDIV   :       2
+RFACT  :   Right
+BCAST  :   1ring
+DEPTH  :       0
+SWAP   : Mix (threshold = 8)
+L1     : transposed form
+U      : transposed form
+EQUIL  : yes
+ALIGN  : 8 double precision words
+
+--------------------------------------------------------------------------------
+
+- The matrix A is randomly generated for each test.
+- The following scaled residual check will be computed:
+      ||Ax-b||_oo / ( eps * ( || x ||_oo * || A ||_oo + || b ||_oo ) * N )
+- The relative machine precision (eps) is taken to be               1.110223e-16
+- Computational tests pass if scaled residuals are less than                16.0
+
+================================================================================
+T/V                N    NB     P     Q               Time                 Gflops
+--------------------------------------------------------------------------------
+WR00R2C4       20000    32     1     1             522.34             1.0212e+01
+HPL_pdgesv() start time Fri Aug 26 12:45:04 2022
+HPL_pdgesv() end time   Fri Aug 26 12:53:47 2022
+
+--------------------------------------------------------------------------------
+||Ax-b||_oo/(eps*(||A||_oo*||x||_oo+||b||_oo)*N)=   4.40719904e-03 ...... PASSED
+...
+```
+Sometimes insted of PASSED you can see FAILED, it means that the residual sums are higher than expected and your CPU calculated the result wrongly. It can be due to too high CPU frequency, not enough CPU voltage or due to overheating.
+Often the computer may also crash or restart. Which is also a sign of instability.
