@@ -167,8 +167,11 @@ The best FLOPs from 20 runs
 
 | board | cpu | GHz | cores | RAM GB | Ns | optimal NB | binary | GFLOPs | THP | FLOPs/cycle/core |
 |-------|-----|-----|-------|--------|---|------------|--------|--------|-----|------------------|
-| Raspberry 4| A72 |      |   |   |       |     | a57/72 |       |     |      |
-| Odroid-HC4 | A55 | 1.8  | 4 | 4 | 18000 | 144 | a53/55 | 14.29 | yes | 1.98 |
-| Odroid-M1  | A55 | 1.992| 4 | 8 | 28000 | 144 | a53/55 | 14.53 | yes | 1.82 |
+| Raspberry3B+| A53 |      | 4 | 1 |       |     |        |       |     |      |
+| Raspberry4  | A72 |      | 4 | 8 |       |     | a57/72 |       |     |      |
+| Odroid-HC4  | A55 | 1.8  | 4 | 4 | 18000 | 144 | a53/55 | 14.29 | yes | 1.98 |
+| Odroid-M1   | A55 | 1.992| 4 | 8 | 28000 | 144 | a53/55 | 14.53 | yes | 1.82 |
 
 According to [Wikiwand](https://www.wikiwand.com/en/FLOPS) Cortex-A53, A55, A72, and A73 should have 2 FLOPs/cycle/core. So you can check that your ARM is reaching the correct FLOPs as it should.
+
+I'm not sure, how to handle big.LITTLE archs as HPL distributes the tasks equally, so the faster cores will wait for the slower ones. The easiest is to test separately the big and then the LITTLE cluster using `taskset` to target the needed cores. In this case we will get correct FLOPs for the clusters, but we will not maximally stress the CPU.
