@@ -1,15 +1,14 @@
 # xhpl-aarch64 
 ## Compiled [HPL (High-Performance Linpack Benchmark)](https://netlib.org/benchmark/hpl/) for Linux on ARM64 (AARCH64)
 
-[HPL](https://en.wikipedia.org/wiki/LINPACK_benchmarks) is used by [top500.org](https://www.top500.org/) to rank the world fastest supercomputers by [FLOPs](https://en.wikipedia.org/wiki/FLOPS) (floating points operations per second). It can also be used to test the stability of your CPU, CPU frequency throttling, CPU cache, RAM, and the power supply as the HPL is quite demanding and does also result verification (see PASSED/FAILED below). On the other hand, HPL is not so good for testing the maximum temperature. The CPU gets really hot during the calculation phase, but it cools down a bit during the verification phase.
+[HPL](https://en.wikipedia.org/wiki/LINPACK_benchmarks) is used by [top500.org](https://www.top500.org/) to rank the world fastest supercomputers by [FLOPs](https://en.wikipedia.org/wiki/FLOPS) (floating points operations per second). It can also be used to test the stability of your CPU, CPU frequency throttling (you either observe the actual frequency or you can tell by lower FLOPs), CPU cache, RAM, and the power supply as the HPL is quite demanding and does also the result verification (see PASSED/FAILED below). On the other hand, HPL is not so good for testing the maximum temperature. The CPU gets really hot during the calculation phase, but it cools down a bit during the verification phase.
 
-The best FLOPs for ARM64 (probably for other archs as well) are obtained using [OpenBLAS library](https://www.openblas.net/), but do not use the library compiled by your distribution. For better results compile it yourself or use the provided binaries. Alternatively one can use [BLIS libraries](https://github.com/flame/blis) or any other BLAS implementation, but it results in less FLOPs.
+The best FLOPs for ARM64 (probably for other archs as well) are obtained using [OpenBLAS library](https://www.openblas.net/), but do not use the library compiled by your distribution. For better results compile it yourself or use the provided binaries. Alternatively one can use [BLIS libraries](https://github.com/flame/blis) or any other BLAS implementation, but it results in fewer FLOPs.
 
 ## How to compile yourself
 
 ### Compile OpenBLAS
 ```
-sudo apt install -y libopenmpi-dev
 wget https://github.com/xianyi/OpenBLAS/archive/refs/tags/v0.3.21.tar.gz
 tar xvf v0.3.20.tar.gz
 cd OpenBLAS-0.3.20
@@ -17,7 +16,7 @@ make -j$(nproc) TARGET=CORTEXA53
 make PREFIX=/home/<username>/openblas install
 rm ~/openblas/lib/*so*
 ```
-The possible TARGETs are listed in file `TargetList.txt`. For us there is CORTEXA53, CORTEXA55, CORTEXA57, CORTEXA72, and CORTEXA73.
+The possible TARGETs are listed in file the `TargetList.txt`. For us are relevant: ARMV8, CORTEXA53, CORTEXA55, CORTEXA57, CORTEXA72, and CORTEXA73.
 
 We deleted the shared libraries (so) in order to link the OpenBLAS statically to the final xhpl binary.
 
@@ -27,19 +26,19 @@ sudo apt install -y libopenmpi-dev
 wget https://www.netlib.org/benchmark/hpl/hpl-2.3.tar.gz
 tar xvf hpl-2.3.tar.gz
 cd hpl-2.3
-LDFLAGS='-L/home/<username>/openblas/lib' ./configure
+LDFLAGS=-L/home/<username>/openblas/lib ./configure
 make -j$(nproc)
 ```
 
 The resulting binary is `hpl-2.3/testing/xhpl`
 
-It turns out that the binary for CORTEX-A53 and CORTEXA55 are the same. And CORTEX57 and CORTEX72 are identical as well. It is so because HPL uses just a few functions from OpenBLAS, which are for those tatgets identical.
+It turns out that the binary for CORTEX-A53 and CORTEXA55 are the same. And CORTEX57 and CORTEX72 are identical as well. It is so because HPL uses just a few functions from OpenBLAS, which are for those targets identical.
 
 ## Using precompiled binaries
 
 As said above, the CORTEX-A53 and CORTEX-A55 are the same as well as the CORTEX-A57 and CORTEX-A72 are the same.
 
-You need openmpi library, even though we will not run it in MPI mode but in OpenMP mode, which automatically will use all the cores. If you want to use MPI, then change P and Q in HPL.dat.
+You need an openmpi library, even though we will not run it in MPI mode but in OpenMP mode, which automatically will use all the cores. If you want to use MPI, then change P and Q in HPL.dat.
 ```
 sudo apt install openmpi-bin
 ```
@@ -78,7 +77,7 @@ HPL.out     output file name (if any)
 8           memory alignment in double (> 0)
 ```
 
-The parameter `Ns` is the size of the square matrix Ns x Ns. The memory consumption is thus proportional to Ns^2. Ns=20000 needs around 4GB RAM, for 8GB use 28000, for 2GB use 14000, and for 1GB 10000. Try to use all the RAM as it improves the FLOPs.
+The parameter `Ns` is the size of the square matrix Ns x Ns. The memory consumption is thus proportional to Ns^2. Ns=20000 needs around 4GB RAM, for 8GB use 28000, for 2GB use 14000, and for 1GB 10000. Try to use all the RAM as it improves the FLOPs, but you should avoid swapping as it drastically decreased FLOPs.
 
 | RAM (GB)  | optimal Ns |
 | ------------- | ------------- |
@@ -90,7 +89,9 @@ The parameter `Ns` is the size of the square matrix Ns x Ns. The memory consumpt
 | 16 | 40000  |
 | 32 | 57000  |
 
-The parameters NB determines, how big blocks are used for calculation. Its optimisation is a bit of a guesswork. It probably depends a lot on CPU caches and RAM speed. So it the example file you have 12 different NBs. The HPL will run for all of them and you can choose the one with highest FLOPs.
+There is [a formula](https://github.com/open-power/op-benchmark-recipes/blob/master/standard-benchmarks/HPL/Linpack_HPL.dat_tuning.md) to calculate the N.
+
+The parameters NB determines, how big blocks are used for calculation. Its optimization is a bit of guesswork. It probably depends a lot on CPU caches and RAM speed. So in the example file you have 12 different NBs. The HPL will run for all of them and you can choose the one with the highest FLOPs.
 
 Then just run `xhpl`. Sample output:
 ```
@@ -148,5 +149,26 @@ HPL_pdgesv() end time   Fri Aug 26 12:53:47 2022
 ||Ax-b||_oo/(eps*(||A||_oo*||x||_oo+||b||_oo)*N)=   4.40719904e-03 ...... PASSED
 ...
 ```
-Sometimes insted of PASSED you can see FAILED, it means that the residual sums are higher than expected and your CPU calculated the result wrongly. It can be due to too high CPU frequency, not enough CPU voltage or due to overheating.
+Sometimes instead of PASSED you can see FAILED, which means that the residual sums are higher than expected and your CPU calculated the result wrongly. It can be due to too high CPU frequency, not enough CPU voltage, or due to overheating.
 Often the computer may also crash or restart. Which is also a sign of instability.
+
+### Huge Pages
+The Huge Pages can improve your FLOPs by approximately 10%. The easiest is to enable the Transparent Huge Pages (THP), if they are supported by your kernel. E.g. Raspberry Pi for some reason has THP disabled.
+
+```
+echo always | sudo tee /sys/kernel/mm/transparent_hugepage/enabled
+echo always | sudo tee /sys/kernel/mm/transparent_hugepage/defrag
+echo 1 | sudo tee /sys/kernel/mm/transparent_hugepage/use_zero_page
+```
+
+### FLOPs
+
+The best FLOPs from 20 runs
+
+| board | cpu | GHz | cores | RAM GB | Ns | optimal NB | binary | GFLOPs | THP | FLOPs/cycle/core |
+|-------|-----|-----|-------|--------|---|------------|--------|--------|-----|------------------|
+| Raspberry 4| A72 |      |   |   |       |     | a57/72 |       |     |      |
+| Odroid-HC4 | A55 | 1.8  | 4 | 4 | 18000 | 144 | a53/55 | 14.29 | yes | 1.98 |
+| Odroid-M1  | A55 | 1.992| 4 | 8 | 28000 | 144 | a53/55 | 14.53 | yes | 1.82 |
+
+According to [Wikiwand](https://www.wikiwand.com/en/FLOPS) Cortex-A53, A55, A72, and A73 should have 2 FLOPs/cycle/core. So you can check that your ARM is reaching the correct FLOPs as it should.
