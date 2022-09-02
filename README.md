@@ -10,8 +10,8 @@ The best FLOPs for ARM64 (probably for other archs as well) are obtained using [
 ### Compile OpenBLAS
 ```
 wget https://github.com/xianyi/OpenBLAS/archive/refs/tags/v0.3.21.tar.gz
-tar xvf v0.3.20.tar.gz
-cd OpenBLAS-0.3.20
+tar xvf v0.3.21.tar.gz
+cd OpenBLAS-0.3.21
 make -j$(nproc) TARGET=CORTEXA53
 make PREFIX=/home/<username>/openblas install
 rm ~/openblas/lib/*so*
