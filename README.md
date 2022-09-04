@@ -167,10 +167,16 @@ The best FLOPs from 20 runs
 
 | board | cpu | GHz | cores | RAM GB | Ns | optimal NB | binary | GFLOPs | THP | FLOPs/cycle/core |
 |-------|-----|-----|-------|--------|---|------------|--------|--------|-----|------------------|
-| Raspberry3B+| A53 | 1.4  | 4 | 1 |       |     |        |       |     |      |
-| Raspberry4  | A72 | 1.8  | 4 | 8 |       |     | a57/72 |       |     |      |
+| Raspberry3B+| A53 | 1.4  | 4 | 1 |       |     |        |       |  no |      |
+| Raspberry4  | A72 | 1.8  | 4 | 8 |       |     | a57/72 |       |  no |      |
 | Odroid-HC4  | A55 | 1.8  | 4 | 4 | 18000 | 144 | a53/55 | 14.29 | yes | 1.98 |
 | Odroid-M1   | A55 | 1.992| 4 | 8 | 28000 | 144 | a53/55 | 15.08 | yes | 1.89 |
+| VIM 3 big   |     |      | 4 | 4 |       |     |        |       | yes |      |
+| VIM 3 LITTLE|     |      | 2 | 4 |       |     |        |       | yes |      |
+| OrangePi4 big   |     |      | 2 | 4 |       |     |        |       | yes |      |
+| OrangePi4 LITTLE|     |      | 4 | 4 |       |     |        |       | yes |      |
+
+If you have more results, I can add them to the table.
 
 According to [Wikiwand](https://www.wikiwand.com/en/FLOPS) Cortex-A53, A55, A72, and A73 should have 2 FLOPs/cycle/core. So you can check that your ARM is reaching the correct FLOPs as it should.
 
