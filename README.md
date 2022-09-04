@@ -170,7 +170,7 @@ The best FLOPs from 20 runs
 | Raspberry3B+| A53 | 1.4  | 4 | 1 |       |     |        |       |     |      |
 | Raspberry4  | A72 | 1.8  | 4 | 8 |       |     | a57/72 |       |     |      |
 | Odroid-HC4  | A55 | 1.8  | 4 | 4 | 18000 | 144 | a53/55 | 14.29 | yes | 1.98 |
-| Odroid-M1   | A55 | 1.992| 4 | 8 | 28000 | 144 | a53/55 | 14.53 | yes | 1.82 |
+| Odroid-M1   | A55 | 1.992| 4 | 8 | 28000 | 144 | a53/55 | 15.08 | yes | 1.89 |
 
 According to [Wikiwand](https://www.wikiwand.com/en/FLOPS) Cortex-A53, A55, A72, and A73 should have 2 FLOPs/cycle/core. So you can check that your ARM is reaching the correct FLOPs as it should.
 
