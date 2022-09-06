@@ -165,16 +165,16 @@ echo 1 | sudo tee /sys/kernel/mm/transparent_hugepage/use_zero_page
 
 The best FLOPs from 20 runs
 
-| board | cpu | GHz | cores | RAM GB | Ns | optimal NB | binary | GFLOPs | THP | FLOPs/cycle/core |
-|-------|-----|-----|-------|--------|---|------------|--------|--------|-----|------------------|
-| Raspberry3B+| A53 | 1.4  | 4 | 1 |       |     |        |       |  no |      |
-| Raspberry4  | A72 | 1.8  | 4 | 8 | 28000 | 128 | a57/72 | 16.02 |  no | 2.23 |
-| Odroid-HC4  | A55 | 1.8  | 4 | 4 | 18000 | 144 | a53/55 | 14.29 | yes | 1.98 |
-| Odroid-M1   | A55 | 1.992| 4 | 8 | 28000 | 144 | a53/55 | 15.08 | yes | 1.89 |
-| VIM 3 big   | A73 | 2.4  | 4 | 4 |       |     |        |       | yes |      |
-| VIM 3 LITTLE| A52 | 2.016| 2 | 4 |       |     |        |       | yes |      |
-| OrangePi4 big   |A72|  1.8 | 2 | 4 |       |     |        |       | yes |      |
-| OrangePi4 LITTLE|A53|1.416 | 4 | 4 |       |     |        |       | yes |      |
+| board | cpu | GHz | cores | RAM GB | Ns | optimal NB | binary | GFLOPs | THP | FLOPs/cycle/core | max temp C|
+|-------|-----|-----|-------|--------|----|------------|--------|--------|-----|------------------|-----------|
+| Raspberry3B+| A53 | 1.4  | 4 | 1 |       |     |        |       |  no |      |    |
+| Raspberry4  | A72 | 1.8  | 4 | 8 | 28000 | 128 | a57/72 | 16.02 |  no | 2.23 | 59 |
+| Odroid-HC4  | A55 | 1.8  | 4 | 4 | 18000 | 144 | a53/55 | 14.29 | yes | 1.98 |    |
+| Odroid-M1   | A55 | 1.992| 4 | 8 | 28000 | 144 | a53/55 | 15.08 | yes | 1.89 | 47 |
+| VIM 3 big   | A73 | 2.4  | 4 | 4 |       |     |        |       | yes |      |    |
+| VIM 3 LITTLE| A52 | 2.016| 2 | 4 |       |     |        |       | yes |      |    |
+| OrangePi4 big   |A72|  1.8 | 2 | 4 |       |     |        |       | yes |      |  |
+| OrangePi4 LITTLE|A53|1.416 | 4 | 4 |       |     |        |       | yes |      |  |
 
 If you have more results, I can add them to the table.
 
@@ -186,8 +186,10 @@ I'm not sure, how to handle big.LITTLE archs as HPL distributes the tasks equall
 
 #### Raspberry Pi 4
 
-Uses the aluminium Armor Case with Dual Fan. To achieve 1.8GHz on newer boards, you need `arm_boost=1` in `/boot/config.txt`. You can also specify `hdmi_enable_4kp60=1`, which increases the core frequency from 500MHz to 550MHz. The thermal throtling can be checked by `vcgencmd get_throttled`.
+Uses the aluminium Armor Case with Dual Fan. To achieve 1.8GHz on newer boards, you need `arm_boost=1` in `/boot/config.txt`. You can also specify `hdmi_enable_4kp60=1`, which increases the core frequency from 500MHz to 550MHz. The thermal throtling can be checked by `vcgencmd get_throttled`. The CPU temperature was under 59C and the thermal throttling was not reached.
 
 #### Odroid-M1
 
-I used a USB 10cm fan on the passive heatsink. Temperature was under 47C. Otherwise the results were lower and more scattered. It indicates thermal throttling with only the passiwe heatsink pointing up, even though the `/sys/devices/system/cpu/cpufreq/policy0/scaling_cur_freq` still reports the default frequency of 1.992GHz. The GFLOPs with the passive cooling were 13.23, so the frequency probably dropped to 1.748GHz.
+I used a USB 10cm fan pointed on the passive heatsink. Temperature was under 47C.
+
+Without the fan with just the stock passive heatsink oriented upwards the results are lower and more scattered. It indicates that there was a thermal throttling, even though the `/sys/devices/system/cpu/cpufreq/policy0/scaling_cur_freq` still reports the default frequency of 1.992GHz. The GFLOPs with only the passive cooling were 13.23, so the frequency probably dropped to 1.748GHz. The CPU temperature reached 66C.
