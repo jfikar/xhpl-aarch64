@@ -168,16 +168,26 @@ The best FLOPs from 20 runs
 | board | cpu | GHz | cores | RAM GB | Ns | optimal NB | binary | GFLOPs | THP | FLOPs/cycle/core |
 |-------|-----|-----|-------|--------|---|------------|--------|--------|-----|------------------|
 | Raspberry3B+| A53 | 1.4  | 4 | 1 |       |     |        |       |  no |      |
-| Raspberry4  | A72 | 1.8  | 4 | 8 |       |     | a57/72 |       |  no |      |
+| Raspberry4  | A72 | 1.8  | 4 | 8 | 28000 | 128 | a57/72 | 16.02 |  no | 2.23 |
 | Odroid-HC4  | A55 | 1.8  | 4 | 4 | 18000 | 144 | a53/55 | 14.29 | yes | 1.98 |
 | Odroid-M1   | A55 | 1.992| 4 | 8 | 28000 | 144 | a53/55 | 15.08 | yes | 1.89 |
-| VIM 3 big   |     |      | 4 | 4 |       |     |        |       | yes |      |
-| VIM 3 LITTLE|     |      | 2 | 4 |       |     |        |       | yes |      |
-| OrangePi4 big   |     |      | 2 | 4 |       |     |        |       | yes |      |
-| OrangePi4 LITTLE|     |      | 4 | 4 |       |     |        |       | yes |      |
+| VIM 3 big   | A73 | 2.4  | 4 | 4 |       |     |        |       | yes |      |
+| VIM 3 LITTLE| A52 | 2.016| 2 | 4 |       |     |        |       | yes |      |
+| OrangePi4 big   |A72|  1.8 | 2 | 4 |       |     |        |       | yes |      |
+| OrangePi4 LITTLE|A53|1.416 | 4 | 4 |       |     |        |       | yes |      |
 
 If you have more results, I can add them to the table.
 
 According to [Wikiwand](https://www.wikiwand.com/en/FLOPS) Cortex-A53, A55, A72, and A73 should have 2 FLOPs/cycle/core. So you can check that your ARM is reaching the correct FLOPs as it should.
 
 I'm not sure, how to handle big.LITTLE archs as HPL distributes the tasks equally, so the faster cores will wait for the slower ones. The easiest is to test separately the big and then the LITTLE cluster using `taskset` to target the needed cores. In this case we will get correct FLOPs for the clusters, but we will not maximally stress the CPU.
+
+### Notes
+
+#### Raspberry Pi 4
+
+Uses the aluminium Armor Case with Dual Fan. To achieve 1.8GHz on newer boards, you need `arm_boost=1` in `/boot/config.txt`. You also should specify `hdmi_enable_4kp60=1`, which increases the core frequency from 500 to 550 MHz. The thermal throtling can be checked by `vcgencmd get_throttled`.
+
+#### Odroid-M1
+
+I used a large 10cm fan on the passive heatsink. Temperature was under 47C. Otherwise the results were more scattered.
