@@ -168,7 +168,7 @@ The best FLOPs from 20 runs
 | board | cpu | GHz | cores | RAM GB | Ns | optimal NB | binary | GFLOPs | THP | FLOPs/cycle/core | max temp C|
 |-------|-----|-----|-------|--------|----|------------|--------|--------|-----|------------------|-----------|
 | Raspberry3B+| A53 | 1.4  | 4 | 1 |       |     |        |       |  no |      |    |
-| Raspberry4  | A72 | 1.8  | 4 | 8 | 28000 | 128 | a57/72 | 16.02 |  no | 2.23 | 59 |
+| Raspberry4  | A72 | 1.8  | 4 | 8 | 28000 | 224 | a57/72 | 16.10 |  no | 2.24 | 59 |
 | Odroid-HC4  | A55 | 1.8  | 4 | 4 | 18000 | 144 | a53/55 | 14.29 | yes | 1.98 |    |
 | Odroid-M1   | A55 | 1.992| 4 | 8 | 28000 | 144 | a53/55 | 15.08 | yes | 1.89 | 47 |
 | VIM 3 big   | A73 | 2.4  | 4 | 4 |       |     |        |       | yes |      |    |
