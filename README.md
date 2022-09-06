@@ -186,8 +186,8 @@ I'm not sure, how to handle big.LITTLE archs as HPL distributes the tasks equall
 
 #### Raspberry Pi 4
 
-Uses the aluminium Armor Case with Dual Fan. To achieve 1.8GHz on newer boards, you need `arm_boost=1` in `/boot/config.txt`. You also should specify `hdmi_enable_4kp60=1`, which increases the core frequency from 500 to 550 MHz. The thermal throtling can be checked by `vcgencmd get_throttled`.
+Uses the aluminium Armor Case with Dual Fan. To achieve 1.8GHz on newer boards, you need `arm_boost=1` in `/boot/config.txt`. You can also specify `hdmi_enable_4kp60=1`, which increases the core frequency from 500MHz to 550MHz. The thermal throtling can be checked by `vcgencmd get_throttled`.
 
 #### Odroid-M1
 
-I used a large 10cm fan on the passive heatsink. Temperature was under 47C. Otherwise the results were lower and more scattered. It indicates thermal throttling with only the passiwe heatsink pointing up, even though the `/sys/devices/system/cpu/cpufreq/policy0/scaling_cur_freq` still reports the default frequency of 1.992GHz. The GFLOPs with the passive cooling were 13.3, so the frequency probably dropped to 1.757GHz.
+I used a USB 10cm fan on the passive heatsink. Temperature was under 47C. Otherwise the results were lower and more scattered. It indicates thermal throttling with only the passiwe heatsink pointing up, even though the `/sys/devices/system/cpu/cpufreq/policy0/scaling_cur_freq` still reports the default frequency of 1.992GHz. The GFLOPs with the passive cooling were 13.23, so the frequency probably dropped to 1.748GHz.
