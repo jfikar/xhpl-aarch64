@@ -190,4 +190,4 @@ Uses the aluminium Armor Case with Dual Fan. To achieve 1.8GHz on newer boards, 
 
 #### Odroid-M1
 
-I used a large 10cm fan on the passive heatsink. Temperature was under 47C. Otherwise the results were more scattered.
+I used a large 10cm fan on the passive heatsink. Temperature was under 47C. Otherwise the results were lower and more scattered. It indicates thermal throttling with only the passiwe heatsink pointing up, even though the `/sys/devices/system/cpu/cpufreq/policy0/scaling_cur_freq` still reports the default frequency of 1.992GHz. The GFLOPs with the passive cooling were 13.3, so the frequency probably dropped to 1.757GHz.
