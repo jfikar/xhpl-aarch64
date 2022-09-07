@@ -169,7 +169,7 @@ The best FLOPs from 20 runs
 |-------|-----|-----|-------|--------|----|------------|--------|--------|-----|------------------|-----------|
 | Raspberry3B+| A53 | 1.4  | 4 | 1 |       |     |        |       |  no |      |    |
 | Raspberry4  | A72 | 1.8  | 4 | 8 | 28000 | 224 | a57/72 | 16.10 |  no | 2.24 | 59 |
-| Odroid-HC4  | A55 | 1.8  | 4 | 4 | 18000 | 144 | a53/55 | 14.29 | yes | 1.98 |    |
+| Odroid-HC4  | A55 | 1.8  | 4 | 4 | 18000 | 144 | a53/55 | 14.29 | yes | 1.98 | 63 |
 | Odroid-M1   | A55 | 1.992| 4 | 8 | 28000 | 144 | a53/55 | 15.08 | yes | 1.89 | 47 |
 | VIM 3 big   | A73 | 2.4  | 4 | 4 |       |     |        |       | yes |      |    |
 | VIM 3 LITTLE| A52 | 2.016| 2 | 4 |       |     |        |       | yes |      |    |
@@ -187,6 +187,10 @@ I'm not sure, how to handle big.LITTLE archs as HPL distributes the tasks equall
 #### Raspberry Pi 4
 
 Uses the aluminium Armor Case with Dual Fan. To achieve 1.8GHz on newer boards, you need `arm_boost=1` in `/boot/config.txt`. You can also specify `hdmi_enable_4kp60=1`, which increases the core frequency from 500MHz to 550MHz. The thermal throtling can be checked by `vcgencmd get_throttled`. The CPU temperature was under 59C and the thermal throttling was not reached.
+
+#### Odroid-HC4
+
+Set the fan speed to the maximum by `sudo systemctl stop fancontrol`. Verify by running `sensors`, you should see around 4500RPM and `/sys/class/hwmon/hwmon2/pwm1_enable` should be 0.
 
 #### Odroid-M1
 
