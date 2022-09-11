@@ -66,7 +66,7 @@ HPL.out     output file name (if any)
 1           # of recursive panel fact.
 2           RFACTs (0=left, 1=Crout, 2=Right)
 1           # of broadcast
-0           BCASTs (0=1rg,1=1rM,2=2rg,3=2rM,4=Lng,5=LnM)
+2           BCASTs (0=1rg,1=1rM,2=2rg,3=2rM,4=Lng,5=LnM)
 1           # of lookahead depth
 0           DEPTHs (>=0)
 2           SWAP (0=bin-exch,1=long,2=mix)
@@ -169,7 +169,7 @@ The best FLOPs from 20 runs
 |-------|-----|-----|-------|--------|----|------------|--------|--------|-----|------------------|-----------|
 | Raspberry3B+| A53 | 1.4  | 4 | 1 |       |     |        |       |  no |      |    |
 | Raspberry4  | A72 | 1.8  | 4 | 8 | 28000 | 224 | a57/72 | 16.10 |  no | 2.24 | 59 |
-| Odroid-HC4  | A55 | 1.8  | 4 | 4 | 18000 | 144 | a53/55 | 14.29 | yes | 1.98 | 63 |
+| Odroid-HC4  | A55 | 1.8  | 4 | 4 | 18000 | 144 | a53/55 | 14.46 | yes | 2.01 | 63 |
 | Odroid-M1   | A55 | 1.992| 4 | 8 | 28000 | 144 | a53/55 | 15.08 | yes | 1.89 | 47 |
 | VIM 3 big   | A73 | 2.4  | 4 | 4 |       |     |        |       | yes |      |    |
 | VIM 3 LITTLE| A52 | 2.016| 2 | 4 |       |     |        |       | yes |      |    |
