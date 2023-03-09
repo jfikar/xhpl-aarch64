@@ -190,7 +190,7 @@ Uses the aluminium Armor Case with Dual Fan. To achieve 1.8GHz on newer boards, 
 
 #### Odroid-HC4
 
-Set the fan speed to the maximum by `sudo systemctl stop fancontrol`. Verify by running `sensors`, you should see around 4500RPM and `/sys/class/hwmon/hwmon0/pwm1_enable` should be 0.
+Set the fan speed to the maximum by `sudo systemctl stop fancontrol`. Verify by running `sensors`, you should see around 4500RPM and `/sys/class/hwmon/hwmon0/pwm1_enable` should be 0. The CPU temperature is under 52C.
 
 #### Odroid-M1
 
