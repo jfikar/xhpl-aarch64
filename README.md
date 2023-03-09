@@ -157,7 +157,7 @@ The Huge Pages can improve your FLOPs by approximately 10%. The easiest is to en
 
 ```
 echo always | sudo tee /sys/kernel/mm/transparent_hugepage/enabled
-echo always | sudo tee /sys/kernel/mm/transparent_hugepage/defrag
+echo madvise | sudo tee /sys/kernel/mm/transparent_hugepage/defrag
 echo 1 | sudo tee /sys/kernel/mm/transparent_hugepage/use_zero_page
 ```
 
@@ -190,7 +190,7 @@ Uses the aluminium Armor Case with Dual Fan. To achieve 1.8GHz on newer boards, 
 
 #### Odroid-HC4
 
-Set the fan speed to the maximum by `sudo systemctl stop fancontrol`. Verify by running `sensors`, you should see around 4500RPM and `/sys/class/hwmon/hwmon2/pwm1_enable` should be 0.
+Set the fan speed to the maximum by `sudo systemctl stop fancontrol`. Verify by running `sensors`, you should see around 4500RPM and `/sys/class/hwmon/hwmon0/pwm1_enable` should be 0.
 
 #### Odroid-M1
 
