@@ -9,9 +9,9 @@ The best FLOPs for ARM64 (probably for other archs as well) are obtained using [
 
 ### Compile OpenBLAS
 ```
-wget https://github.com/xianyi/OpenBLAS/archive/refs/tags/v0.3.21.tar.gz
-tar xvf v0.3.21.tar.gz
-cd OpenBLAS-0.3.21
+wget https://github.com/xianyi/OpenBLAS/archive/refs/tags/v0.3.22.tar.gz
+tar xvf v0.3.22.tar.gz
+cd OpenBLAS-0.3.22
 make -j$(nproc) TARGET=CORTEXA53
 make PREFIX=/home/<username>/openblas install
 rm ~/openblas/lib/*so*
@@ -32,7 +32,7 @@ make -j$(nproc)
 
 The resulting binary is `hpl-2.3/testing/xhpl`
 
-It turns out that the binary for CORTEX-A53 and CORTEXA55 are the same. And CORTEX57 and CORTEX72 are identical as well. It is so because HPL uses just a few functions from OpenBLAS, which are for those targets identical.
+It turns out that the binary for CORTEX-A53 and CORTEX-A55 are the same. And CORTEX-A57 and CORTEX-A72 are identical as well. It is so because HPL uses just a few functions from OpenBLAS, which are for those targets identical.
 
 ## Using precompiled binaries
 
