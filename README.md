@@ -19,7 +19,7 @@ The possible TARGETs are listed in file the `TargetList.txt`. For us are relevan
 
 We do not need anymore to deleted the shared libraries (so) in order to link the OpenBLAS statically to the final xhpl binary, as the `NO_SHARED=1` takes care of them.
 
-It is also posible to use `DYNAMIC_ARCH=1` to compile all the supported CPUs into one library.
+×It is also posible to use `DYNAMIC_ARCH=1` to compile all the supported CPUs into one library.
 
 ### Compile HPL
 ```
@@ -78,7 +78,7 @@ HPL.out     output file name (if any)
 8           memory alignment in double (> 0)
 ```
 
-The parameter `Ns` is the size of the square matrix Ns x Ns. The memory consumption is thus proportional to Ns^2. Ns=20000 needs around 4GB RAM, for 8GB use 28000, for 2GB use 14000, and for 1GB 10000. Try to use all the RAM as it improves the FLOPs, but you should avoid swapping as it drastically decreased FLOPs.
+The parameter `Ns` is the size of the square matrix Ns × Ns. The memory consumption is thus proportional to Ns^2. Ns=20000 needs around 4GB RAM, for 8GB use 28000, for 2GB use 14000, and for 1GB 10000. Try to use all the RAM as it improves the FLOPs, but you should avoid swapping as it drastically decreased FLOPs.
 
 | RAM (GB)  | optimal Ns |
 | ------------- | ------------- |
