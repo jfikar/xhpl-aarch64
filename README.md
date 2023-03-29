@@ -12,13 +12,14 @@ The best FLOPs for ARM64 (probably for other archs as well) are obtained using [
 wget https://github.com/xianyi/OpenBLAS/archive/refs/tags/v0.3.22.tar.gz
 tar xvf v0.3.22.tar.gz
 cd OpenBLAS-0.3.22
-make -j$(nproc) TARGET=CORTEXA53
-make PREFIX=/home/<username>/openblas install
-rm ~/openblas/lib/*so*
+NO_SHARED=1 make -j$(nproc) TARGET=CORTEXA53
+NO_SHARED=1 make PREFIX=${HOME}/openblas install
 ```
 The possible TARGETs are listed in file the `TargetList.txt`. For us are relevant: ARMV8, CORTEXA53, CORTEXA55, CORTEXA57, CORTEXA72, and CORTEXA73.
 
-We deleted the shared libraries (so) in order to link the OpenBLAS statically to the final xhpl binary.
+We do not need anymore to deleted the shared libraries (so) in order to link the OpenBLAS statically to the final xhpl binary, as the `NO_SHARED=1` takes care of them.
+
+It is also posible to use `DYNAMIC_ARCH=1` to compile all the supported CPUs into one library.
 
 ### Compile HPL
 ```
@@ -26,7 +27,7 @@ sudo apt install -y libopenmpi-dev
 wget https://www.netlib.org/benchmark/hpl/hpl-2.3.tar.gz
 tar xvf hpl-2.3.tar.gz
 cd hpl-2.3
-LDFLAGS=-L/home/<username>/openblas/lib ./configure
+LDFLAGS=-L${HOME}/openblas/lib ./configure
 make -j$(nproc)
 ```
 
