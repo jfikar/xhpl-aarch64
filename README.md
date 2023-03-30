@@ -22,7 +22,7 @@ We do not need anymore to deleted the shared libraries (so) in order to link the
 It is also posible to use `DYNAMIC_ARCH=1` to compile all the supported CPUs into one library. Also increase the number of threads by using `NUM_THREADS=64` and disable setting the CPU affinity by `NO_AFFINITY=1`.
 
 ```
-NO_SHARED=1 NO_FORTRAN=1 DYNAMIC_ARCH=1 NUM_THREADS=64 NO_AFFINITY=1 make -j$(nproc)
+NO_SHARED=1 NO_FORTRAN=1 DYNAMIC_ARCH=1 NUM_THREADS=64 NO_AFFINITY=1 make -j$(nproc) TARGET=ARMV8
 ```
 
 ### Compile HPL
