@@ -31,7 +31,7 @@ sudo apt install -y libopenmpi-dev
 wget https://www.netlib.org/benchmark/hpl/hpl-2.3.tar.gz
 tar xvf hpl-2.3.tar.gz
 cd hpl-2.3
-LDFLAGS=-L${HOME}/openblas/lib ./configure
+LDFLAGS=-L${HOME}/openblas/lib CFLAGS="-pthread -fopenmp" ./configure
 make -j$(nproc)
 ```
 
