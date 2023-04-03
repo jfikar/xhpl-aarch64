@@ -162,7 +162,7 @@ The Huge Pages can improve your FLOPs by approximately 10%. The easiest is to en
 
 ```
 echo always | sudo tee /sys/kernel/mm/transparent_hugepage/enabled
-echo madvise | sudo tee /sys/kernel/mm/transparent_hugepage/defrag
+echo always | sudo tee /sys/kernel/mm/transparent_hugepage/defrag
 echo 1 | sudo tee /sys/kernel/mm/transparent_hugepage/use_zero_page
 ```
 
