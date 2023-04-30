@@ -55,8 +55,8 @@ HPL.out     output file name (if any)
 6           device out (6=stdout,7=stderr,file)
 1           # of problems sizes (N)
 28000       Ns
-15          # of NBs
-32 48 64 80 96 112 128 144 160 176 192 208 224 240 256 NBs
+20          # of NBs
+96 104 112 120 128 136 144 152 160 168 176 184 192 200 208 216 224 232 240 248 NBs
 0           PMAP process mapping (0=Row-,1=Column-major)
 1           # of process grids (P x Q)
 1           Ps
@@ -173,7 +173,7 @@ The best FLOPs from 20 runs
 | board | cpu | GHz | cores | RAM GB | Ns | optimal NB | binary | GFLOPs | THP | FLOPs/cycle/core | max temp C|
 |-------|-----|-----|-------|--------|----|------------|--------|--------|-----|------------------|-----------|
 | Raspberry3B+| A53 | 1.4  | 4 | 1 |       |     |        |       |  no |      |    |
-| Raspberry4  | A72 | 1.8  | 4 | 8 | 27000 | 216 | a57/72 | 16.53 |  no | 2.30 | 59 |
+| Raspberry4  | A72 | 1.8  | 4 | 8 | 28200 | 200 | a57/72 | 17.09 |  no | 2.30 | 59 |
 | Odroid-HC4  | A55 | 1.8  | 4 | 4 | 18000 | 144 | a53/55 | 14.46 | yes | 2.01 | 63 |
 | Odroid-M1   | A55 | 1.992| 4 | 8 | 28000 | 144 | a53/55 | 15.08 | yes | 1.89 | 47 |
 | VIM 3 big   | A73 | 2.4  | 4 | 4 |       |     |        |       | yes |      |    |
