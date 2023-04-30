@@ -168,7 +168,7 @@ echo 1 | sudo tee /sys/kernel/mm/transparent_hugepage/use_zero_page
 
 ### FLOPs
 
-The best FLOPs from 20 runs
+The best FLOPs of 20 runs or more
 
 | board | cpu | GHz | cores | RAM GB | Ns | optimal NB | binary | GFLOPs | THP | FLOPs/cycle/core | max temp C|
 |-------|-----|-----|-------|--------|----|------------|--------|--------|-----|------------------|-----------|
