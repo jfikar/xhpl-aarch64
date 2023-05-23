@@ -15,7 +15,7 @@ cd OpenBLAS-0.3.23
 NO_SHARED=1 NO_FORTRAN=1 NUM_THREADS=64 NO_AFFINITY=1 USE_OPENMP=1 make -j$(nproc) TARGET=CORTEXA53
 NO_SHARED=1 make PREFIX=${HOME}/openblas install
 ```
-The possible TARGETs are listed in file the `TargetList.txt`. For us are relevant: ARMV8, CORTEXA53, CORTEXA55, CORTEXA57, CORTEXA72, CORTEXA73, and NEOVERSEN1 (for CORTEX-A76, 77, and 78).
+The possible TARGETs are listed in file the `TargetList.txt`. For us are relevant: ARMV8, CORTEXA53, CORTEXA55, CORTEXA57, CORTEXA72, CORTEXA73, and NEOVERSEN1 (good for CORTEX-A76, 77, and 78?).
 
 We do not need anymore to deleted the shared libraries (so) in order to link the OpenBLAS statically to the final xhpl binary, as the `NO_SHARED=1` takes care of them.
 
