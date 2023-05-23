@@ -12,8 +12,12 @@ The best FLOPs for ARM64 (probably for other archs as well) are obtained using [
 wget https://github.com/xianyi/OpenBLAS/archive/refs/tags/v0.3.23.tar.gz
 tar xvf v0.3.23.tar.gz
 cd OpenBLAS-0.3.23
-NO_SHARED=1 NO_FORTRAN=1 NUM_THREADS=64 NO_AFFINITY=1 USE_OPENMP=1 make -j$(nproc) TARGET=CORTEXA53
-NO_SHARED=1 make PREFIX=${HOME}/openblas install
+export NO_SHARED=1
+export TARGET=CORTEXA53
+NO_FORTRAN=1 NUM_THREADS=64 NO_AFFINITY=1 USE_OPENMP=1 make -j$(nproc)
+make PREFIX=${HOME}/openblas install
+unset NO_SHARED
+unset TARGET
 ```
 The possible TARGETs are listed in file the `TargetList.txt`. For us are relevant: ARMV8, CORTEXA53, CORTEXA55, CORTEXA57, CORTEXA72, CORTEXA73, and NEOVERSEN1 (good for CORTEX-A76, 77, and 78?).
 
@@ -22,7 +26,17 @@ We do not need anymore to deleted the shared libraries (so) in order to link the
 It is also posible to use `DYNAMIC_ARCH=1` to compile all the supported CPUs into one library. Also increase the number of threads by using `NUM_THREADS=64` and disable setting the CPU affinity by `NO_AFFINITY=1`.
 
 ```
-NO_SHARED=1 NO_FORTRAN=1 DYNAMIC_ARCH=1 NUM_THREADS=64 NO_AFFINITY=1 USE_OPENMP=1 make -j$(nproc) TARGET=ARMV8
+wget https://github.com/xianyi/OpenBLAS/archive/refs/tags/v0.3.23.tar.gz
+tar xvf v0.3.23.tar.gz
+cd OpenBLAS-0.3.23
+export NO_SHARED=1
+export TARGET=CORTEXA53
+export DYNAMIC_ARCH=1
+NO_FORTRAN=1 NUM_THREADS=64 NO_AFFINITY=1 USE_OPENMP=1 make -j$(nproc)
+make PREFIX=${HOME}/openblas install
+unset NO_SHARED
+unset TARGET
+unset DYNAMIC_ARCH
 ```
 
 ### Compile HPL
