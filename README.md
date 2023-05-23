@@ -16,8 +16,6 @@ export NO_SHARED=1
 export TARGET=CORTEXA53
 NO_FORTRAN=1 NUM_THREADS=64 NO_AFFINITY=1 USE_OPENMP=1 make -j$(nproc)
 make PREFIX=${HOME}/openblas install
-unset NO_SHARED
-unset TARGET
 ```
 The possible TARGETs are listed in file the `TargetList.txt`. For us are relevant: ARMV8, CORTEXA53, CORTEXA55, CORTEXA57, CORTEXA72, CORTEXA73, and NEOVERSEN1 (good for CORTEX-A76, 77, and 78?).
 
@@ -34,9 +32,6 @@ export TARGET=CORTEXA53
 export DYNAMIC_ARCH=1
 NO_FORTRAN=1 NUM_THREADS=64 NO_AFFINITY=1 USE_OPENMP=1 make -j$(nproc)
 make PREFIX=${HOME}/openblas install
-unset NO_SHARED
-unset TARGET
-unset DYNAMIC_ARCH
 ```
 
 ### Compile HPL
