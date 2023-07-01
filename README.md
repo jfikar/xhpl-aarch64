@@ -180,15 +180,15 @@ echo 1 | sudo tee /sys/kernel/mm/transparent_hugepage/use_zero_page
 The best FLOPs of 20 runs or more
 
 | SBC | cpu | GHz | cores | RAM GB | Ns | optimal NB | binary | GFLOPs | THP | FLOPs/cycle/core | temp ℃ | power W | 1core ℃ | 1core W | idle ℃ | idle W |
-|-------|-----|-----|-------|--------|----|------------|--------|--------|-----|------------------|-----------|-----------|-----------|-----------|
-| Raspberry3B+| A53 | 1.4  | 4 | 1 |       |     |        |       |  no |      |    |    |  |  |
+|-------|-----|-----|-------|--------|----|------------|--------|--------|-----|------------------|-----------|-----------|-----------|-----------|-----------|-----------|
+| Raspberry3B+| A53 | 1.4  | 4 | 1 |       |     |        |       |  no |      |    |    |  |  | | |
 | Raspberry4  | A72 | 1.8  | 4 | 8 | 28200 | 200 | a57/72 | 17.09 |  no | 2.37 | 62 | 10 | 50 | 6 | 37 | 4 |
-| Odroid-HC4  | A55 | 1.8  | 4 | 4 | 18000 | 144 | a53/55 | 14.46 | yes | 2.01 | 63 |    |  |  |
+| Odroid-HC4  | A55 | 1.8  | 4 | 4 | 18000 | 144 | a53/55 | 14.46 | yes | 2.01 | 63 |    |  |  | | |
 | Odroid-M1   | A55 | 1.992| 4 | 8 | 28000 | 144 | a53/55 | 15.08 | yes | 1.89 | 51 | 10 | 31 | 5 | 26 | 3 |
-| VIM 3 big   | A73 | 2.4  | 4 | 4 |       |     |        |       | yes |      |    |    |  |  |
-| VIM 3 LITTLE| A52 | 2.016| 2 | 4 |       |     |        |       | yes |      |    |    |  |  |
-| OrangePi4 big   |A72|  1.8 | 2 | 4 |       |     |        |       | yes |      |  |    |  |  |
-| OrangePi4 LITTLE|A53|1.416 | 4 | 4 |       |     |        |       | yes |      |  |    |  |  |
+| VIM 3 big   | A73 | 2.4  | 4 | 4 |       |     |        |       | yes |      |    |    |  |  | | |
+| VIM 3 LITTLE| A52 | 2.016| 2 | 4 |       |     |        |       | yes |      |    |    |  |  | | |
+| OrangePi4 big   |A72|  1.8 | 2 | 4 |       |     |        |       | yes |      |  |    |  |  | | |
+| OrangePi4 LITTLE|A53|1.416 | 4 | 4 |       |     |        |       | yes |      |  |    |  |  | | |
 
 If you have more results, I can add them to the table.
 
