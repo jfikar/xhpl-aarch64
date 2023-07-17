@@ -17,7 +17,7 @@ export TARGET=CORTEXA53
 NO_FORTRAN=1 NUM_THREADS=64 NO_AFFINITY=1 USE_OPENMP=1 make -j$(nproc)
 make PREFIX=${HOME}/openblas install
 ```
-The possible TARGETs are listed in file the `TargetList.txt`. For us are relevant: ARMV8, CORTEXA53, CORTEXA55, CORTEXA57, CORTEXA72, CORTEXA73, and NEOVERSEN1 (good for CORTEX-A76, 77, and 78?).
+The possible TARGETs are listed in file the `TargetList.txt`. For us are relevant: *ARMV8*, *CORTEXA53*, *CORTEXA55*, *CORTEXA57*, *CORTEXA72*, *CORTEXA73*, and *NEOVERSEN1* (good for CORTEX-A76, 77, and 78?).
 
 We do not need anymore to deleted the shared libraries (so) in order to link the OpenBLAS statically to the final xhpl binary, as the `NO_SHARED=1` takes care of them.
 
@@ -33,6 +33,18 @@ export DYNAMIC_ARCH=1
 NO_FORTRAN=1 NUM_THREADS=64 NO_AFFINITY=1 USE_OPENMP=1 make -j$(nproc)
 make PREFIX=${HOME}/openblas install
 ```
+### Alternatively compile BLIS
+```
+wget https://github.com/flame/blis/archive/refs/tags/0.9.0.tar.gz
+tar xvf 0.9.0.tar.gz
+cd blis-0.9.0
+./configure -p ${HOME}/blis --disable-shared -t openmp auto
+make -j${nproc}
+make check
+make install
+ln -s ${HOME}/blis/lib/libblis.a ${HOME}/blis/lib/libopenblas.a
+```
+The *auto* should compile the right library. But the detection algorithm might be wrong. All the possibilities can be displayed by `ls config`. For ARM64 there are *cortexa53*, *cortexa57*, *firestorm*, *thunderx2* and *generic*. Recently, there is also support for configuration families. In that case, use *arm64* all posibilities are compiled in, and the right one is chosen at runtime. But again, the detection migth be wrong. Choose the right library and link it to 
 
 ### Compile HPL
 ```
@@ -40,17 +52,25 @@ sudo apt install -y libopenmpi-dev
 wget https://www.netlib.org/benchmark/hpl/hpl-2.3.tar.gz
 tar xvf hpl-2.3.tar.gz
 cd hpl-2.3
+```
+#### With OpenBLAS
+```
 LDFLAGS=-L${HOME}/openblas/lib CFLAGS="-pthread -fopenmp" ./configure
+make -j$(nproc)
+```
+#### With BLIS
+```
+LDFLAGS=-L${HOME}/blis/lib CFLAGS="-fopenmp" ./configure
 make -j$(nproc)
 ```
 
 The resulting binary is `hpl-2.3/testing/xhpl`
 
-It turns out that the binary for CORTEX-A53 and CORTEX-A55 are the same. And CORTEX-A57 and CORTEX-A72 are identical as well. It is so because HPL uses just a few functions ([dgemm](https://netlib.org/lapack/explore-html/d1/d54/group__double__blas__level3_gaeda3cbd99c8fb834a60a6412878226e1.html), [daxpy](https://netlib.org/lapack/explore-html/de/da4/group__double__blas__level1_ga8f99d6a644d3396aa32db472e0cfc91c.html),  dcopy, dgemv, dger, dscal, dswap, dtrsm, dtrsv, and idamax) from OpenBLAS, which are for those targets identical.
+It turns out that the OpenBLAS binary for *CORTEX-A53* and *CORTEX-A55* are the same. And *CORTEX-A57* and *CORTEX-A72* are identical as well. It is so because HPL uses just a few functions ([dgemm](https://netlib.org/lapack/explore-html/d1/d54/group__double__blas__level3_gaeda3cbd99c8fb834a60a6412878226e1.html), [daxpy](https://netlib.org/lapack/explore-html/de/da4/group__double__blas__level1_ga8f99d6a644d3396aa32db472e0cfc91c.html),  dcopy, dgemv, dger, dscal, dswap, dtrsm, dtrsv, and idamax) from OpenBLAS, which are for those targets identical.
 
 ## Using precompiled binaries
 
-As said above, the CORTEX-A53 and CORTEX-A55 are the same as well as the CORTEX-A57 and CORTEX-A72 are the same.
+As said above, the *CORTEX-A53* and *CORTEX-A55* are the same as well as the *CORTEX-A57* and *CORTEX-A72* are the same.
 
 You need an openmpi library, even though we will not run it in MPI mode but in OpenMP mode, which automatically will use all the cores. If you want to use MPI, then change P and Q in HPL.dat.
 ```
