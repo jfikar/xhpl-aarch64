@@ -14,7 +14,7 @@ tar xvf v0.3.23.tar.gz
 cd OpenBLAS-0.3.23
 export NO_SHARED=1
 export TARGET=CORTEXA53
-NO_FORTRAN=1 NUM_THREADS=64 USE_OPENMP=1 make -j$(nproc)
+NO_FORTRAN=1 NUM_THREADS=16 USE_OPENMP=1 make -j$(nproc)
 make test
 make PREFIX=${HOME}/openblas install
 ```
@@ -22,7 +22,7 @@ The possible TARGETs are listed in file the `TargetList.txt`. For us are relevan
 
 We do not need anymore to deleted the shared libraries (so) in order to link the OpenBLAS statically to the final xhpl binary, as the `NO_SHARED=1` takes care of them.
 
-It is also posible to use `DYNAMIC_ARCH=1` to compile all the supported CPUs into one library. Also increase the number of threads by using `NUM_THREADS=64`.
+It is also posible to use `DYNAMIC_ARCH=1` to compile all the supported CPUs into one library. Also specify the maximum number of threads by using `NUM_THREADS=16`.
 
 ```
 wget https://github.com/xianyi/OpenBLAS/archive/refs/tags/v0.3.23.tar.gz
@@ -31,7 +31,7 @@ cd OpenBLAS-0.3.23
 export NO_SHARED=1
 export TARGET=CORTEXA53
 export DYNAMIC_ARCH=1
-NO_FORTRAN=1 NUM_THREADS=64 USE_OPENMP=1 make -j$(nproc)
+NO_FORTRAN=1 NUM_THREADS=16 USE_OPENMP=1 make -j$(nproc)
 make test
 make PREFIX=${HOME}/openblas install
 ```
