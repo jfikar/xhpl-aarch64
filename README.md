@@ -44,7 +44,7 @@ make check
 make install
 ln -s ${HOME}/blis/lib/libblis.a ${HOME}/blis/lib/libopenblas.a
 ```
-The *auto* should compile the right library. But the detection algorithm might be wrong. All the possibilities can be displayed by `ls config`. For ARM64 there are *cortexa53*, *cortexa57*, *firestorm*, *thunderx2* and *generic*. Recently, there is also support for configuration families. In that case, use *arm64* all posibilities are compiled in, and the right one is chosen at runtime. But again, the detection migth be wrong. Choose the right library and link it to 
+The *auto* should compile the right library. But the detection algorithm might be wrong. All the possibilities can be displayed by `ls config`. For ARM64 there are *cortexa53*, *cortexa57*, *firestorm* (Apple A14, M1), *thunderx2* (Neoverse N1), and *generic*. Recently, there is also support for configuration families. In that case, use *arm64* all posibilities are compiled in, and the right one is chosen at runtime. But again, the detection migth be wrong. Choose the right library and link it to 
 
 ### Compile HPL
 ```
