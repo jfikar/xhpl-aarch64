@@ -15,10 +15,9 @@ cd OpenBLAS-0.3.23
 export NO_SHARED=1
 export TARGET=CORTEXA53
 NO_FORTRAN=1 NUM_THREADS=8 USE_OPENMP=1 make -j$(nproc)
-make test
 make PREFIX=${HOME}/openblas install
 ```
-The possible TARGETs are listed in file the `TargetList.txt`. For us are relevant: *ARMV8*, *CORTEXA53*, *CORTEXA55*, *CORTEXA57*, *CORTEXA72*, *CORTEXA73*, and *NEOVERSEN1* (good for CORTEX-A76, 77, and 78?).
+The possible TARGETs are listed in file the `TargetList.txt`. For us are relevant: *ARMV8*, *CORTEXA53*, *CORTEXA55*, *CORTEXA57*, *CORTEXA72*, *CORTEXA73*, and *NEOVERSEN1* (good for CORTEX-A76, 77, and 78?). Not setting TARGET will try to auto-detect it.
 
 We do not need anymore to deleted the shared libraries (so) in order to link the OpenBLAS statically to the final xhpl binary, as the `NO_SHARED=1` takes care of them.
 
@@ -32,7 +31,6 @@ export NO_SHARED=1
 export TARGET=ARMV8
 export DYNAMIC_ARCH=1
 NO_FORTRAN=1 NUM_THREADS=8 USE_OPENMP=1 make -j$(nproc)
-make test
 make PREFIX=${HOME}/openblas install
 ```
 ### Alternatively compile BLIS
