@@ -60,7 +60,7 @@ make -j$(nproc)
 ```
 #### With BLIS
 ```
-LDFLAGS=-L${HOME}/blis/lib CFLAGS="-fopenmp" ./configure
+LDFLAGS=-L${HOME}/blis/lib CFLAGS="-pthread -fopenmp" ./configure
 make -j$(nproc)
 ```
 
