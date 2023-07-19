@@ -14,7 +14,7 @@ tar xvf v0.3.23.tar.gz
 cd OpenBLAS-0.3.23
 export NO_SHARED=1
 export TARGET=CORTEXA53
-NO_FORTRAN=1 NUM_THREADS=16 USE_OPENMP=1 make -j$(nproc)
+NO_FORTRAN=1 NUM_THREADS=8 USE_OPENMP=1 make -j$(nproc)
 make test
 make PREFIX=${HOME}/openblas install
 ```
@@ -29,9 +29,9 @@ wget https://github.com/xianyi/OpenBLAS/archive/refs/tags/v0.3.23.tar.gz
 tar xvf v0.3.23.tar.gz
 cd OpenBLAS-0.3.23
 export NO_SHARED=1
-export TARGET=CORTEXA53
+export TARGET=ARMV8
 export DYNAMIC_ARCH=1
-NO_FORTRAN=1 NUM_THREADS=16 USE_OPENMP=1 make -j$(nproc)
+NO_FORTRAN=1 NUM_THREADS=8 USE_OPENMP=1 make -j$(nproc)
 make test
 make PREFIX=${HOME}/openblas install
 ```
@@ -215,7 +215,7 @@ The best FLOPs of 20 runs or more
 | 〃          | 〃   | 〃   | 1 | 〃|       |     |        |       |  yes |     |   |  | 〃  |  〃|
 | VIM 3 LITTLE| A52 | 2.016| 2 | 4 |       |     |        |       | yes |      |  |  | 〃 | 〃 |
 | 〃          | 〃   | 〃   | 1 | 〃|       |     |        |       |  yes |     |   |  | 〃  |  〃|
-| OrangePi4 big   |A72|  1.8 | 2 | 4 |       |     |        |       | yes |    |  |  | 35 | 4 |
+| OrangePi4 big   |A72|  1.8 | 2 | 4 |       |     |        |       | yes |    |  |  | 29 | 4 |
 | 〃          | 〃   | 〃   | 1 | 〃|       |     |        |       |  yes |     |  |  | 〃  |  〃|
 | OrangePi4 LITTLE|A53|1.416 | 4 | 4 |       |     |        |       | yes |    | |  | 〃 | 〃 |
 | 〃          | 〃   | 〃   | 1 | 〃|       |     |        |       |  yes |     |   |  | 〃  |  〃|
