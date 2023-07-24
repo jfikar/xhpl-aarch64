@@ -213,10 +213,10 @@ The best FLOPs of 20 runs or more
 | 〃          | 〃   | 〃   | 1 | 〃|       |     |        |       |  yes |     |   |  | 〃  |  〃|
 | VIM 3 LITTLE| A52 | 2.016| 2 | 4 |       |     |        |       | yes |      |  |  | 〃 | 〃 |
 | 〃          | 〃   | 〃   | 1 | 〃|       |     |        |       |  yes |     |   |  | 〃  |  〃|
-| OrangePi4 big   |A72|  1.8 | 2 | 4 |       |     |        |       | yes |    |  |  | 29 | 4 |
-| 〃          | 〃   | 〃   | 1 | 〃|       |     |        |       |  yes |     |  |  | 〃  |  〃|
-| OrangePi4 LITTLE|A53|1.416 | 4 | 4 |       |     |        |       | yes |    | |  | 〃 | 〃 |
-| 〃          | 〃   | 〃   | 1 | 〃|       |     |        |       |  yes |     |   |  | 〃  |  〃|
+| OrangePi4 big   |A72|  1.8 | 2 | 4 | 20160 | 252 | OpenBlas | 10.84 | yes |  3.01  |  |  | 29 | 4 |
+| 〃          | 〃   | 〃   | 1 | 〃|   20088 | 124 | OpenBlas |  5.83  |  yes |   3.24 |  |  | 〃  |  〃|
+| OrangePi4 LITTLE|A53|1.416 | 4 | 4 | 20064 | 176 | OpenBlas| 11.41  | yes |  2.01  | |  | 〃 | 〃 |
+| 〃          | 〃   | 〃   | 1 | 〃|  20088  | 248  | OpenBlas| 3.39   |  yes |  2.40   |   |  | 〃  |  〃|
 
 If you have more results, I can add them to the table.
 
