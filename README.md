@@ -209,8 +209,8 @@ The best FLOPs of 20 runs or more
 | 〃          | 〃   | 〃   | 1 | 〃|       |     |        |       |  yes |    |   |  | 〃  |  〃|
 | Odroid-M1   | A55 | 1.992| 4 | 8 | 28000 | 144 | a53/55          | 15.08 | yes | 1.89 | 51 | 10 | 26 | 3 |
 |      〃     |  〃 |  〃   | 1 | 〃|       |     |  〃              |       | yes |      | 31 | 5  | 〃 | 〃|
-| VIM 3 big   | A73 | 2.4  | 4 | 4 |       |     |        |       | yes |      |  |  |    |   |
-| 〃          | 〃   | 〃   | 1 | 〃|       |     |        |       |  yes |     |   |  | 〃  |  〃|
+| VIM 3    | A73 | 2.4  | 4 | 4 | 20000 |  184 |   a57 BLIS  | 17.6    | yes | 1.83 |  |  |    |   |
+| 〃          | 〃   | 〃   | 1 | 〃| 20000 |  200   | a57 BLIS |  5.49     |  yes | 2.04 |   |  |   |  |
 | VIM 3 LITTLE| A52 | 2.016| 2 | 4 |       |     |        |       | yes |      |  |  | 〃 | 〃 |
 | 〃          | 〃   | 〃   | 1 | 〃|       |     |        |       |  yes |     |   |  | 〃  |  〃|
 | OrangePi4 big   |A72|  1.8 | 2 | 4 | 20160 | 252 | OpenBlas | 10.84 | yes |  3.01  |  |  | 29 | 4 |
@@ -239,3 +239,27 @@ Set the fan speed to the maximum by `sudo systemctl stop fancontrol`. Verify by 
 I used a USB 10cm fan pointed on the passive heatsink. Temperature was under 47C.
 
 Without the fan with just the stock passive heatsink oriented upwards the results are lower and more scattered. It indicates that there was a thermal throttling, even though the `/sys/devices/system/cpu/cpufreq/policy0/scaling_cur_freq` still reports the default frequency of 1.992GHz. The GFLOPs with only the passive cooling were 13.23, so the frequency probably dropped to 1.748GHz. The CPU temperature reached 69C.
+
+#### Vim3 
+
+T/V                N    NB     P     Q               Time                 Gflops
+--------------------------------------------------------------------------------
+WR11C2R4       20000   184     2     2             301.54             1.7689e+01
+HPL_pdgesv() start time Wed Sep 13 14:52:15 2023
+
+HPL_pdgesv() end time   Wed Sep 13 14:57:16 2023
+
+--------------------------------------------------------------------------------
+||Ax-b||_oo/(eps*(||A||_oo*||x||_oo+||b||_oo)*N)=   3.81677861e-03 ...... PASSED
+
+
+T/V                N    NB     P     Q               Time                 Gflops
+--------------------------------------------------------------------------------
+WR11C2R4       20000   200     1     1             970.52             5.4959e+00
+HPL_pdgesv() start time Wed Sep 13 17:37:30 2023
+
+HPL_pdgesv() end time   Wed Sep 13 17:53:40 2023
+
+--------------------------------------------------------------------------------
+||Ax-b||_oo/(eps*(||A||_oo*||x||_oo+||b||_oo)*N)=   4.45853593e-03 ...... PASSED
+
