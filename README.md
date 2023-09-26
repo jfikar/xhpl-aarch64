@@ -217,6 +217,8 @@ The best FLOPs of 20 runs or more
 | 〃          | 〃   | 〃   | 1 | 〃|   20088 | 124 | OpenBlas |  5.83  |  yes |   3.24 |  |  | 〃  |  〃|
 | OrangePi4 LITTLE|A53|1.416 | 4 | 4 | 20064 | 176 | OpenBlas| 11.41  | yes |  2.01  | |  | 〃 | 〃 |
 | 〃          | 〃   | 〃   | 1 | 〃|  20088  | 248  | OpenBlas| 3.39   |  yes |  2.40   |   |  | 〃  |  〃|
+| Orange Pi 5 Plus | A76/A55 | 1.8 | 4/4 | 16 | 40000 | 232 | BLIS | 25.6 | | 1.77 | | | | |
+|         ^ RK3588 |  | 1.8 | 1 | 16 |40000 | 96 | BLIS | 13.4 | | 7.4 | | | |
 
 If you have more results, I can add them to the table.
 
@@ -242,24 +244,19 @@ Without the fan with just the stock passive heatsink oriented upwards the result
 
 #### Vim3 
 
-T/V                N    NB     P     Q               Time                 Gflops
---------------------------------------------------------------------------------
-WR11C2R4       20000   184     2     2             301.54             1.7689e+01
-HPL_pdgesv() start time Wed Sep 13 14:52:15 2023
+Stock VIM3 active cooling.
 
-HPL_pdgesv() end time   Wed Sep 13 14:57:16 2023
+`20000   184     2     2             301.54             1.7689e+01`
 
---------------------------------------------------------------------------------
-||Ax-b||_oo/(eps*(||A||_oo*||x||_oo+||b||_oo)*N)=   3.81677861e-03 ...... PASSED
+`20000   200     1     1             970.52             5.4959e+00`
 
 
-T/V                N    NB     P     Q               Time                 Gflops
---------------------------------------------------------------------------------
-WR11C2R4       20000   200     1     1             970.52             5.4959e+00
-HPL_pdgesv() start time Wed Sep 13 17:37:30 2023
+#### Orange Pi 5 Plus 
 
-HPL_pdgesv() end time   Wed Sep 13 17:53:40 2023
+I used heatsinks on CPU and RAM with a case fan. 
 
---------------------------------------------------------------------------------
-||Ax-b||_oo/(eps*(||A||_oo*||x||_oo+||b||_oo)*N)=   4.45853593e-03 ...... PASSED
+`40000   232     2     4            1666.31             2.5607e+01`
 
+`40000    96     1     1            3177.34             1.3429e+01`
+
+The Single Core (1P/1Q) performance is so nearly ideal that I think there is a lot still on the table. I pulled this from my initial run of 5 NBs. The RK3588 is a very enticing platform, with much higher inter-node communication potential. It already out-performs a 3-node cluster of 8G Pi 4s, and has 5x the networking throughput potential. 
