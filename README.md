@@ -209,14 +209,16 @@ The best FLOPs of 20 runs or more
 | 〃          | 〃   | 〃   | 1 | 〃|       |     |        |       |  yes |    |   |  | 〃  |  〃|
 | Odroid-M1   | A55 | 1.992| 4 | 8 | 28000 | 144 | a53/55          | 15.08 | yes | 1.89 | 51 | 10 | 26 | 3 |
 |      〃     |  〃 |  〃   | 1 | 〃|       |     |  〃              |       | yes |      | 31 | 5  | 〃 | 〃|
-| VIM 3 big   | A73 | 2.4  | 4 | 4 |       |     |        |       | yes |      |  |  |    |   |
-| 〃          | 〃   | 〃   | 1 | 〃|       |     |        |       |  yes |     |   |  | 〃  |  〃|
+| VIM 3    | A73 | 2.4  | 4 | 4 | 20000 |  184 |   a57 BLIS  | 17.6    | yes | 1.83 |  |  |    |   |
+| 〃          | 〃   | 〃   | 1 | 〃| 20000 |  200   | a57 BLIS |  5.49     |  yes | 2.04 |   |  |   |  |
 | VIM 3 LITTLE| A52 | 2.016| 2 | 4 |       |     |        |       | yes |      |  |  | 〃 | 〃 |
 | 〃          | 〃   | 〃   | 1 | 〃|       |     |        |       |  yes |     |   |  | 〃  |  〃|
 | OrangePi4 big   |A72|  1.8 | 2 | 4 | 20160 | 252 | OpenBlas | 10.84 | yes |  3.01  |  |  | 29 | 4 |
 | 〃          | 〃   | 〃   | 1 | 〃|   20088 | 124 | OpenBlas |  5.83  |  yes |   3.24 |  |  | 〃  |  〃|
 | OrangePi4 LITTLE|A53|1.416 | 4 | 4 | 20064 | 176 | OpenBlas| 11.41  | yes |  2.01  | |  | 〃 | 〃 |
 | 〃          | 〃   | 〃   | 1 | 〃|  20088  | 248  | OpenBlas| 3.39   |  yes |  2.40   |   |  | 〃  |  〃|
+| Orange Pi 5 Plus | A76/A55 | 1.8 | 4/4 | 16 | 40000 | 232 | BLIS | 25.6 | | 1.77 | | | | |
+|         ^ RK3588 |  | 1.8 | 1 | 16 |40000 | 96 | BLIS | 13.4 | | 7.4 | | | |
 
 If you have more results, I can add them to the table.
 
@@ -239,3 +241,22 @@ Set the fan speed to the maximum by `sudo systemctl stop fancontrol`. Verify by 
 I used a USB 10cm fan pointed on the passive heatsink. Temperature was under 47C.
 
 Without the fan with just the stock passive heatsink oriented upwards the results are lower and more scattered. It indicates that there was a thermal throttling, even though the `/sys/devices/system/cpu/cpufreq/policy0/scaling_cur_freq` still reports the default frequency of 1.992GHz. The GFLOPs with only the passive cooling were 13.23, so the frequency probably dropped to 1.748GHz. The CPU temperature reached 69C.
+
+#### Vim3 
+
+Stock VIM3 active cooling.
+
+`20000   184     2     2             301.54             1.7689e+01`
+
+`20000   200     1     1             970.52             5.4959e+00`
+
+
+#### Orange Pi 5 Plus 
+
+I used heatsinks on CPU and RAM with a case fan. 
+
+`40000   232     2     4            1666.31             2.5607e+01`
+
+`40000    96     1     1            3177.34             1.3429e+01`
+
+The Single Core (1P/1Q) performance is so nearly ideal that I think there is a lot still on the table. I pulled this from my initial run of 5 NBs. The RK3588 is a very enticing platform, with much higher inter-node communication potential. It already out-performs a 3-node cluster of 8G Pi 4s, and has 5x the networking throughput potential. 
