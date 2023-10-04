@@ -9,9 +9,9 @@ The best FLOPs for ARM64 (probably for other archs as well) are obtained using [
 
 ### Compile OpenBLAS
 ```
-wget https://github.com/xianyi/OpenBLAS/archive/refs/tags/v0.3.23.tar.gz
-tar xvf v0.3.23.tar.gz
-cd OpenBLAS-0.3.23
+wget https://github.com/xianyi/OpenBLAS/archive/refs/tags/v0.3.24.tar.gz
+tar xvf v0.3.24.tar.gz
+cd OpenBLAS-0.3.24
 export NO_SHARED=1
 export TARGET=CORTEXA53
 NO_FORTRAN=1 NUM_THREADS=8 USE_OPENMP=1 make -j$(nproc)
@@ -24,9 +24,9 @@ We do not need anymore to deleted the shared libraries (so) in order to link the
 It is also posible to use `DYNAMIC_ARCH=1` to compile all the supported CPUs into one library. Also specify the maximum number of threads by using `NUM_THREADS=8`.
 
 ```
-wget https://github.com/xianyi/OpenBLAS/archive/refs/tags/v0.3.23.tar.gz
-tar xvf v0.3.23.tar.gz
-cd OpenBLAS-0.3.23
+wget https://github.com/xianyi/OpenBLAS/archive/refs/tags/v0.3.24.tar.gz
+tar xvf v0.3.24.tar.gz
+cd OpenBLAS-0.3.24
 export NO_SHARED=1
 export TARGET=ARMV8
 export DYNAMIC_ARCH=1
