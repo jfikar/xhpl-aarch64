@@ -226,9 +226,9 @@ The best FLOPs of 20 runs or more
 
 If you have more results, I can add them to the table.
 
-According to [Wikipedia](https://en.wikipedia.org/wiki/FLOPS) Cortex-A53, A55, A72, and A73 should have **2** FLOPs/cycle/core. Cortex-A57 **4** FLOPs/cycle/core and A76, A77, and A78 **8** FLOPs/cycle/core. So you can check that your ARM is reaching the correct FLOPs as it should.
+According to [Wikipedia](https://en.wikipedia.org/wiki/FLOPS) Cortex-A53, A55, A72, and A73 should have **2** FLOPs/cycle/core, but it is wrong. It should be **4** FLOPs/cycle/core as Cortex-A57. Cortex-A76, A77, and A78 should have **8** FLOPs/cycle/core. So you can check that your ARM is reaching the correct FLOPs as it should.
 
-I'm not sure, how to handle big.LITTLE archs as HPL distributes the tasks equally, so the faster cores will wait for the slower ones. The easiest is to test separately the big and then the LITTLE cluster using `taskset` to target the needed cores. In this case we will get correct FLOPs for the clusters, but we will not maximally stress the CPU.
+It is more difficult to to handle big.LITTLE archs as HPL distributes the tasks equally, so the faster cores will have to wait for the slower ones. The easiest is to test separately the big and then the LITTLE cluster using `taskset` to target the needed cores. In this case we will get correct FLOPs for the clusters, but we will not maximally stress the CPU.
 
 ### Notes
 
