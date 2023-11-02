@@ -1,9 +1,9 @@
 # xhpl-aarch64 
 ## Compiled [HPL (High-Performance Linpack Benchmark)](https://netlib.org/benchmark/hpl/) for Linux on ARM64 (AARCH64)
 
-[HPL](https://en.wikipedia.org/wiki/LINPACK_benchmarks) is used by [top500.org](https://www.top500.org/) to rank the world fastest supercomputers by [FLOPs](https://en.wikipedia.org/wiki/FLOPS) (floating points operations per second). It can also be used to test the stability of your CPU, CPU frequency throttling (you either observe the actual frequency or you can tell by lower FLOPs), CPU cache, RAM, and the power supply as the HPL is quite demanding and does also the result verification (see PASSED/FAILED below). On the other hand, HPL is not so good for testing the maximum temperature. The CPU gets really hot during the calculation phase, but it cools down a bit during the verification phase.
+[HPL](https://en.wikipedia.org/wiki/LINPACK_benchmarks) is used by [top500.org](https://www.top500.org/) to rank the world's fastest supercomputers by [FLOPs](https://en.wikipedia.org/wiki/FLOPS) (floating-points operations per second). It can also be used to test the stability of your CPU, CPU frequency throttling (you either observe the actual frequency or determine it by lower FLOPs), CPU cache, RAM, and the power supply since HPL is quite demanding and also performs the result verification (see PASSED/FAILED below). On the other hand, HPL is not ideal for testing the maximum temperature. The CPU gets quite hot during the calculation phase, but cools down during the verification phase.
 
-The best FLOPs for ARM64 (probably for other archs as well) are obtained using [OpenBLAS library](https://www.openblas.net/), but do not use the library compiled by your distribution. For better results compile it yourself or use the provided binaries. Alternatively one can use [BLIS libraries](https://github.com/flame/blis), [ARM Performance Libraries](https://developer.arm.com/downloads/-/arm-performance-libraries) or any other BLAS implementation, but it may result in fewer FLOPs.
+The best FLOPs for ARM64 (probably for other archs as well) are usually obtained using [OpenBLAS library](https://www.openblas.net/). However, it is advisable not to use the library compiled by your distribution. For better results, compile it yourself or use the provided binaries. Alternatively, one can utilize [BLIS libraries](https://github.com/flame/blis), [ARM Performance Libraries](https://developer.arm.com/downloads/-/arm-performance-libraries), or any other BLAS implementation.
 
 ## How to compile yourself
 
@@ -17,11 +17,11 @@ export TARGET=CORTEXA53
 NO_FORTRAN=1 NUM_THREADS=8 USE_OPENMP=1 make -j$(nproc)
 make PREFIX=${HOME}/openblas install
 ```
-The possible TARGETs are listed in file the `TargetList.txt`. For us are relevant: *ARMV8*, *CORTEXA53*, *CORTEXA55*, *CORTEXA57*, *CORTEXA72*, *CORTEXA73*, and *NEOVERSEN1* (good for CORTEX-A76, 77, and 78?). Not setting TARGET will try to auto-detect it.
+The possible TARGETs are listed in file the `TargetList.txt`. For our purpose, the relevant options include: *ARMV8*, *CORTEXA53*, *CORTEXA55*, *CORTEXA57*, *CORTEXA72*, *CORTEXA73*, and *CORTEXX1* (good for CORTEX-A76, A77, and A78?). Not setting TARGET will result in an automatic detection.
 
-We do not need anymore to deleted the shared libraries (so) in order to link the OpenBLAS statically to the final xhpl binary, as the `NO_SHARED=1` takes care of them.
+We no longer need the shared libraries (so) as we link OpenBLAS statically to the final xhpl binary, the option `NO_SHARED=1` takes care of this.
 
-It is also posible to use `DYNAMIC_ARCH=1` to compile all the supported CPUs into one library. Also specify the maximum number of threads by using `NUM_THREADS=8`.
+It is also posible to use `DYNAMIC_ARCH=1` to compile all the supported CPUs into one library. Specify the maximum number of threads by using `NUM_THREADS=8`.
 
 ```
 wget https://github.com/xianyi/OpenBLAS/archive/refs/tags/v0.3.24.tar.gz
@@ -44,7 +44,7 @@ make check
 make install
 ln -s ${HOME}/blis/lib/libblis.a ${HOME}/blis/lib/libopenblas.a
 ```
-The *auto* should compile the right library. But the detection algorithm might be wrong. All the possibilities can be displayed by `ls config`. For ARM64 there are *cortexa53*, *cortexa57*, *firestorm* (Apple A14, M1), *thunderx2* (Neoverse N1), and *generic*. Recently, there is also support for configuration families. In that case, use *arm64* all posibilities are compiled in, and the right one is chosen at runtime. But again, the detection migth be wrong. Choose the right library and link it to 
+The *auto* option should compile the right library, but the detection algorithm might be inaccurate. You can view all the available possibilities by using the command `ls config`. For ARM64 there are *cortexa53*, *cortexa57*, *firestorm* (Apple A14, M1), *thunderx2* (Neoverse N1), and *generic*. Recently, there is also support for configuration families. In that case, use *arm64*, and all posibilities are compiled, with the correct one chosen at runtime. However, the detection might still be incorrect. Select the right library and link it to the HPL. 
 
 ### Compile HPL
 ```
@@ -66,17 +66,17 @@ make -j$(nproc)
 
 The resulting binary is `hpl-2.3/testing/xhpl`
 
-It turns out that the OpenBLAS binary for *CORTEX-A53* and *CORTEX-A55* are the same. And *CORTEX-A57* and *CORTEX-A72* are identical as well. It is so because HPL uses just a few functions ([dgemm](https://netlib.org/lapack/explore-html/d1/d54/group__double__blas__level3_gaeda3cbd99c8fb834a60a6412878226e1.html), [daxpy](https://netlib.org/lapack/explore-html/de/da4/group__double__blas__level1_ga8f99d6a644d3396aa32db472e0cfc91c.html),  dcopy, dgemv, dger, dscal, dswap, dtrsm, dtrsv, and idamax) from OpenBLAS, which are for those targets identical.
+It turns out that the OpenBLAS binary for *CORTEX-A53* and *CORTEX-A55* are the same. And *CORTEX-A57* and *CORTEX-A72* are identical as well. This is because HPL utilizes only a limited set of functions ([dgemm](https://netlib.org/lapack/explore-html/d1/d54/group__double__blas__level3_gaeda3cbd99c8fb834a60a6412878226e1.html), [daxpy](https://netlib.org/lapack/explore-html/de/da4/group__double__blas__level1_ga8f99d6a644d3396aa32db472e0cfc91c.html),  dcopy, dgemv, dger, dscal, dswap, dtrsm, dtrsv, and idamax) from OpenBLAS, and these functions are identical for these specified targets.
 
 ## Using precompiled binaries
 
-As said above, the *CORTEX-A53* and *CORTEX-A55* are the same as well as the *CORTEX-A57* and *CORTEX-A72* are the same.
+As mentioned earlier, the *CORTEX-A53* and *CORTEX-A55* are the same, and similarly, the *CORTEX-A57* and *CORTEX-A72* are identical.
 
-You need an openmpi library, even though we will not run it in MPI mode but in OpenMP mode, which automatically will use all the cores. If you want to use MPI, then change P and Q in HPL.dat.
+You need an openmpi library, even if you intend to run it in OpenMP mode, which will automatically utilize all available cores. If you wish to use MPI, you can modify the values of P and Q in the `HPL.dat` file.
 ```
 sudo apt install openmpi-bin
 ```
-You need to create a text file `HPL.dat` file, for example like this:
+Additionally, you need to create a `HPL.dat` text file, which may look something like this:
 ```
 HPLinpack benchmark input file
 Innovative Computing Laboratory, University of Tennessee
@@ -111,7 +111,7 @@ HPL.out     output file name (if any)
 8           memory alignment in double (> 0)
 ```
 
-The parameter `Ns` is the size of the square matrix Ns × Ns. The memory consumption is thus proportional to Ns^2. Ns=20000 needs around 4GB RAM, for 8GB use 28000, for 2GB use 14000, and for 1GB 10000. Try to use all the RAM as it improves the FLOPs, but you should avoid swapping as it drastically decreased FLOPs.
+The parameter `Ns` is the size of the square matrix Ns × Ns, and the memory consumption is directly proportional to Ns^2. Ns=20000 needs around 4GB RAM, for 8GB use 28000, for 2GB use 14000, and for 1GB 10000. Try to use all the RAM as it improves the FLOPs, but you should avoid swapping as it drastically decreased FLOPs.
 
 | RAM (GB)  | optimal Ns |
 | ------------- | ------------- |
@@ -125,7 +125,7 @@ The parameter `Ns` is the size of the square matrix Ns × Ns. The memory consump
 
 There is [a formula](https://github.com/open-power/op-benchmark-recipes/blob/master/standard-benchmarks/HPL/Linpack_HPL.dat_tuning.md) to calculate the N.
 
-The parameters NB determines, how big blocks are used for calculation. Its optimization is a bit of guesswork. It probably depends a lot on CPU caches and RAM speed. So in the example file you have 12 different NBs. The HPL will run for all of them and you can choose the one with the highest FLOPs.
+The parameters NB determines the size of the blocks used for calculation. Its optimization is a bit of guesswork. It probably depends a lot on CPU caches and RAM speed. So in the example file you have 12 different NBs. The HPL will run for all of them and you can choose the one with the highest FLOPs.
 
 Then just run `xhpl`. Sample output:
 ```
@@ -183,11 +183,11 @@ HPL_pdgesv() end time   Fri Aug 26 12:53:47 2022
 ||Ax-b||_oo/(eps*(||A||_oo*||x||_oo+||b||_oo)*N)=   4.40719904e-03 ...... PASSED
 ...
 ```
-Sometimes instead of PASSED you can see FAILED, which means that the residual sums are higher than expected and your CPU calculated the result wrongly. It can be due to too high CPU frequency, not enough CPU voltage, or due to overheating.
+Sometimes instead of **PASSED** you can see **FAILED**, which means that the residual sums are higher than expected and your CPU calculated the result wrongly. This can be due to too high CPU frequency, not enough CPU voltage, or due to overheating.
 Often the computer may also crash or restart. Which is also a sign of instability.
 
 ### Huge Pages
-The Huge Pages can improve your FLOPs by approximately 10%. The easiest is to enable the Transparent Huge Pages (THP), if they are supported by your kernel. E.g. Raspberry Pi for some reason has THP disabled.
+The Huge Pages can improve your FLOPs by approximately 10%. The easiest method is to enable the Transparent Huge Pages (THP) if your kernel supports them. For instance, the official Raspberry Pi kernel has THP disabled for some reason.
 
 ```
 echo always | sudo tee /sys/kernel/mm/transparent_hugepage/enabled
@@ -224,9 +224,9 @@ The best FLOPs of 20 runs or more
 | Rock 5B LITTLE| A55 | 1.8 | 4 | 16 |40176 | 216 | a53/55 OpenBLAS | 11.87 | no | 1.65 |   |  | 〃| 〃 |
 | 〃            | 〃   | 〃  | 1 | 〃 |40096 | 224  |    〃           | 4.30  | no | 2.38 |   |  | 〃|  〃|
 
-If you have more results, I can add them to the table.
+If you have additional results, I can include them in the table
 
-According to [Wikipedia](https://en.wikipedia.org/wiki/FLOPS) Cortex-A53, A55, A72, and A73 should have **2** FLOPs/cycle/core, but it is wrong. It should be **4** FLOPs/cycle/core as Cortex-A57. Cortex-A76, A77, and A78 should have **8** FLOPs/cycle/core. So you can check that your ARM is reaching the correct FLOPs as it should.
+According to [Wikipedia](https://en.wikipedia.org/wiki/FLOPS#Floating-point_operations_per_clock_cycle_for_various_processors) Cortex-A53, A55, A57, A72, and A73 have **4** FLOPs/cycle/core. Cortex-A76, A77, and A78 have **8** FLOPs/cycle/core. So you can check that your ARM is reaching the correct FLOPs as it should.
 
 It is more difficult to to handle big.LITTLE archs as HPL distributes the tasks equally, so the faster cores will have to wait for the slower ones. The easiest is to test separately the big and then the LITTLE cluster using `taskset` to target the needed cores. In this case we will get correct FLOPs for the clusters, but we will not maximally stress the CPU.
 
@@ -266,4 +266,4 @@ I used heatsinks on CPU and RAM with a case fan.
 The Single Core (1P/1Q) performance is so nearly ideal that I think there is a lot still on the table. I pulled this from my initial run of 5 NBs. The RK3588 is a very enticing platform, with much higher inter-node communication potential. It already out-performs a 3-node cluster of 8G Pi 4s, and has 5x the networking throughput potential. 
 
 #### Rock 5B
-It has the same SoC as Orange Pi 5 (RK3588). With stock active fan and Rock's own software [fan-control](https://github.com/pymumu/fan-control-rock5b). Probably additional cooling is necesary. Unfortunately, the stock kernel rock-5b 5.10.110-37-rockchip-g74457be0716d does not have THP support.
+It has the same SoC as Orange Pi 5 (RK3588). With stock active fan and Rock's own software [fan-control](https://github.com/pymumu/fan-control-rock5b). Probably additional cooling is necesary. Unfortunately, the stock kernel does not have THP support.
