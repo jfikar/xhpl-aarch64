@@ -265,5 +265,5 @@ I used heatsinks on CPU and RAM with a case fan.
 
 The Single Core (1P/1Q) performance is so nearly ideal that I think there is a lot still on the table. I pulled this from my initial run of 5 NBs. The RK3588 is a very enticing platform, with much higher inter-node communication potential. It already out-performs a 3-node cluster of 8G Pi 4s, and has 5x the networking throughput potential. 
 
-#### Rock 5B
+#### Radaxa Rock 5B
 It has the same SoC as Orange Pi 5 (RK3588). With stock active fan and Rock's own software [fan-control](https://github.com/pymumu/fan-control-rock5b). Probably additional cooling is necesary. Unfortunately, the stock kernel does not have THP support.
