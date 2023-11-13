@@ -9,9 +9,9 @@ The best FLOPs for ARM64 (probably for other archs as well) are usually obtained
 
 ### Compile OpenBLAS
 ```
-wget https://github.com/xianyi/OpenBLAS/archive/refs/tags/v0.3.24.tar.gz
-tar xvf v0.3.24.tar.gz
-cd OpenBLAS-0.3.24
+wget https://github.com/xianyi/OpenBLAS/archive/refs/tags/v0.3.25.tar.gz
+tar xvf v0.3.25.tar.gz
+cd OpenBLAS-0.3.25
 export NO_SHARED=1
 export TARGET=CORTEXA53
 NO_FORTRAN=1 NUM_THREADS=8 USE_OPENMP=1 make -j$(nproc)
@@ -24,9 +24,9 @@ We no longer need the shared libraries (so) as we link OpenBLAS statically to th
 It is also posible to use `DYNAMIC_ARCH=1` to compile all the supported CPUs into one library. Specify the maximum number of threads by using `NUM_THREADS=8`.
 
 ```
-wget https://github.com/xianyi/OpenBLAS/archive/refs/tags/v0.3.24.tar.gz
-tar xvf v0.3.24.tar.gz
-cd OpenBLAS-0.3.24
+wget https://github.com/xianyi/OpenBLAS/archive/refs/tags/v0.3.25.tar.gz
+tar xvf v0.3.25.tar.gz
+cd OpenBLAS-0.3.25
 export NO_SHARED=1
 export TARGET=ARMV8
 export DYNAMIC_ARCH=1
@@ -204,7 +204,7 @@ The best FLOPs of 20 runs or more
 | Raspberry3B+| A53 | 1.4  | 4 | 1 |       |     |                 |       |  no |      |  |  | | |
 | 〃          | 〃   | 〃   | 1 | 〃|       |     |        |       |  yes |     |   |  | 〃  |  〃|
 | Raspberry4  | A72 | 1.8  | 4 | 8 | 28000 | 168 | a57 BLIS | 18.44 |  yes | 2.56 | 62 | 10 | 37 | 4 |
-|      〃     |  〃 |   〃  | 1 | 〃|       |     |         〃       |       | yes |      | 50 | 6  |  〃| 〃 |
+|      〃     |  〃 |   〃  | 1 | 〃| 28080 |  240|         〃| 5.82  | yes |  3.23 | 50 | 6  |  〃| 〃 |
 | Odroid-HC4  | A55 | 1.8  | 4 | 4 | 18000 | 144 | a53/55          | 14.46 | yes | 2.01 | 63 |    |  |  | | |
 | 〃          | 〃   | 〃   | 1 | 〃|       |     |        |       |  yes |    |   |  | 〃  |  〃|
 | Odroid-M1   | A55 | 1.992| 4 | 8 | 28000 | 144 | a53/55          | 15.08 | yes | 1.89 | 51 | 10 | 26 | 3 |
@@ -223,6 +223,7 @@ The best FLOPs of 20 runs or more
 |      〃      |  〃  |   〃 | 1 | 〃 | 40068 | 252 |         〃   | 17.21 | yes | 7.17 | 45 | 6.5 |  〃| 〃 |
 | Rock 5B LITTLE| A55 | 1.8 | 4 | 16 |40000 | 120 | a53/55 OpenBLAS | 18.35 | yes | 2.55 | 36  |  | 〃| 〃 |
 | 〃            | 〃   | 〃  | 1 | 〃 |40096 | 224  |    〃           | 4.30  | no | 2.38 |   |  | 〃|  〃|
+| Rock 5B|A76+A55 | 2.4, 1.8 | 4+4 | 16 |32064, 20592 | 192, 176 | x1+a53/55 OpenBLAS | 60.96+15.79=76.75 | yes | - | 69  |  | 〃| 〃 |
 
 If you have additional results, I can include them in the table
 
@@ -266,4 +267,4 @@ I used heatsinks on CPU and RAM with a case fan.
 The Single Core (1P/1Q) performance is so nearly ideal that I think there is a lot still on the table. I pulled this from my initial run of 5 NBs. The RK3588 is a very enticing platform, with much higher inter-node communication potential. It already out-performs a 3-node cluster of 8G Pi 4s, and has 5x the networking throughput potential. 
 
 #### Radaxa Rock 5B
-It has the same SoC as Orange Pi 5 (RK3588). With stock active fan and Rock's own software [fan-control](https://github.com/pymumu/fan-control-rock5b) it reaches 75C and it looks like thermal throttling. However, the reported frequencies are still the same, as with Odroid M1. Additional cooling is necesary. The stock Radaxa kernel does not have THP support. Rock 5B is performing a slower than Orange Pi 5 with the same SoC. The difference is [DMC (Dynamic Memory Interface)](https://github.com/ThomasKaiser/Knowledge/blob/master/articles/Quick_Preview_of_ROCK_5B.md#important-insights-and-suggested-optimisations), which automatically clocks RAM frequency down from 2112MHz to 528MHz (it saves about 0.5-0.6W when idle) and it is not activated in the Orange Pi kernel. To improve the benchmark, do either `echo 25 >/sys/devices/platform/dmc/devfreq/dmc/upthreshold` or `echo performance | sudo tee /sys/class/devfreq/dmc/governor`. The latter is reverted by `echo dmc_ondemand | sudo tee /sys/class/devfreq/dmc/governor`. The newer Radaxa kernel/image implements the firts workaround.
+It has the same SoC as Orange Pi 5 (RK3588). With stock active fan and Rock's own software [fan-control](https://github.com/pymumu/fan-control-rock5b) it reaches 75C and it looks like thermal throttling. However, the reported frequencies are still the same, they do not decrease (as with Odroid M1). It shows all the time 2352MHz for CPU 4 and 5, and 2304MHz for CPU 6 and 7. Additional cooling is necesary. The stock Radaxa kernel does not have THP support. Rock 5B is performing a slower than Orange Pi 5 with the same SoC. The difference is [DMC (Dynamic Memory Interface)](https://github.com/ThomasKaiser/Knowledge/blob/master/articles/Quick_Preview_of_ROCK_5B.md#important-insights-and-suggested-optimisations), which automatically clocks RAM frequency down from 2112MHz to 528MHz (it saves about 0.5-0.6W when idle) and it is not activated in the Orange Pi kernel. To improve the benchmark, do either `echo 25 >/sys/devices/platform/dmc/devfreq/dmc/upthreshold` or `echo performance | sudo tee /sys/class/devfreq/dmc/governor`. The latter is reverted by `echo dmc_ondemand | sudo tee /sys/class/devfreq/dmc/governor`. The newer Radaxa kernel/image implements the firts workaround.
