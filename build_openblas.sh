@@ -7,8 +7,8 @@ export NO_FORTRAN=1
 export NUM_THREADS=8
 export USE_OPENMP=1
 make clean
-#make -j$(nproc)
-#make PREFIX=${HOME}/openblas install
+make -j$(nproc)
+make PREFIX=${HOME}/openblas install
 mv ${HOME}/openblas/lib/libopenblasp-r0.3.25.a ${HOME}/openblas/lib/libopenblas_universalp-r0.3.25.a
 
 export DYNAMIC_ARCH=0
