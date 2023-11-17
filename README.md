@@ -66,11 +66,11 @@ make -j$(nproc)
 
 The resulting binary is `hpl-2.3/testing/xhpl`
 
-It turns out that the OpenBLAS binary for *CORTEX-A53* and *CORTEX-A55* are the same. And *CORTEX-A57* and *CORTEX-A72* are identical as well. This is because HPL utilizes only a limited set of functions ([dgemm](https://netlib.org/lapack/explore-html/d1/d54/group__double__blas__level3_gaeda3cbd99c8fb834a60a6412878226e1.html), [daxpy](https://netlib.org/lapack/explore-html/de/da4/group__double__blas__level1_ga8f99d6a644d3396aa32db472e0cfc91c.html),  dcopy, dgemv, dger, dscal, dswap, dtrsm, dtrsv, and idamax) from OpenBLAS, and these functions are identical for these specified targets.
+It turns out that the OpenBLAS binary for *CORTEX-A53* and *CORTEX-A55* are the same  (no more since OpenBLAS-0.3.25). And *CORTEX-A57* and *CORTEX-A72* are identical as well. This is because HPL utilizes only a limited set of functions ([dgemm](https://netlib.org/lapack/explore-html/d1/d54/group__double__blas__level3_gaeda3cbd99c8fb834a60a6412878226e1.html), [daxpy](https://netlib.org/lapack/explore-html/de/da4/group__double__blas__level1_ga8f99d6a644d3396aa32db472e0cfc91c.html),  dcopy, dgemv, dger, dscal, dswap, dtrsm, dtrsv, and idamax) from OpenBLAS, and these functions are identical for these specified targets.
 
 ## Using precompiled binaries
 
-As mentioned earlier, the *CORTEX-A53* and *CORTEX-A55* are the same, and similarly, the *CORTEX-A57* and *CORTEX-A72* are identical.
+As mentioned earlier, the *CORTEX-A53* and *CORTEX-A55* are the same (no more since OpenBLAS-0.3.25) and similarly, the *CORTEX-A57* and *CORTEX-A72* are identical.
 
 You need an openmpi library, even if you intend to run it in OpenMP mode, which will automatically utilize all available cores. If you wish to use MPI, you can modify the values of P and Q in the `HPL.dat` file.
 ```
