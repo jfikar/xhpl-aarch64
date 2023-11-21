@@ -222,7 +222,7 @@ The best FLOPs of 20 runs or more
 | Rock 5B  big | A76 | 2.4  | 4 | 16 | 40040 | 220 | x1 OpenBLAS | 66.02 | yes | 6.88 | 62 | 15.9 | 34 | 2.3 |
 |      〃      |  〃  |   〃 | 1 | 〃 | 40068 | 252 |         〃   | 17.21 | yes | 7.17 | 45 | 6.5 |  〃| 〃 |
 | Rock 5B LITTLE| A55 | 1.8 | 4 | 16 |40000 | 120 | a53/55 OpenBLAS | 18.35 | yes | 2.55 | 36  |  | 〃| 〃 |
-| 〃            | 〃   | 〃  | 1 | 〃 |40096 | 224  |    〃           | 4.30  | no | 2.38 |   |  | 〃|  〃|
+| 〃            | 〃   | 〃  | 1 | 〃 |40096 | 224  |    〃           | 4.74  | yes | 2.63 | 29  |  | 〃|  〃|
 | Rock 5B|A76+A55 | 2.4, 1.8 | 4+4 | 16 |32064, 20592 | 192, 176 | x1+a53/55 OpenBLAS | 60.96+15.79=76.75 | yes | - | 69  |  | 〃| 〃 |
 
 If you have additional results, I can include them in the table
