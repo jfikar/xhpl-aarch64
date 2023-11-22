@@ -203,7 +203,7 @@ The best FLOPs of 20 runs or more
 |-------|-----|-----|-------|--------|----|------------|--------|--------|-----|------------------|-----------|-----------|-----------|----------|
 | Raspberry3B+| A53 | 1.4  | 4 | 1 |       |     |                 |       |  no |      |  |  | | |
 | 〃          | 〃   | 〃   | 1 | 〃|       |     |        |       |  yes |     |   |  | 〃  |  〃|
-| Raspberry4  | A72 | 1.8  | 4 | 8 | 28000 | 168 | a57 BLIS | 18.44 |  yes | 2.56 | 62 | 10 | 37 | 4 |
+| Raspberry4  | A72 | 1.8  | 4 | 8 | 28152 | 184 | a57 BLIS | 20.18 |  yes | 2.80 | 62 | 10 | 37 | 4 |
 |      〃     |  〃 |   〃  | 1 | 〃| 28080 |  240|         〃| 5.82  | yes |  3.23 | 50 | 6  |  〃| 〃 |
 | Odroid-HC4  | A55 | 1.8  | 4 | 4 | 18000 | 144 | a53/55          | 14.46 | yes | 2.01 | 63 |    |  |  | | |
 | 〃          | 〃   | 〃   | 1 | 〃|       |     |        |       |  yes |    |   |  | 〃  |  〃|
@@ -235,7 +235,7 @@ It is more difficult to to handle big.LITTLE archs as HPL distributes the tasks 
 
 #### Raspberry Pi 4
 
-Uses the aluminium Armor Case with Dual Fan. To achieve 1.8GHz on newer boards, you need `arm_boost=1` in `/boot/config.txt`. You can also specify `hdmi_enable_4kp60=1`, which increases the core frequency from 500MHz to 550MHz. The thermal throtling can be checked by `vcgencmd get_throttled`. The CPU temperature was under 62C and the thermal throttling was not reached.
+Uses the aluminium Armor Case with Dual Fan. To achieve 1.8GHz on newer boards, you need `arm_boost=1` in `/boot/config.txt`. You can also specify `hdmi_enable_4kp60=1`, which increases the core frequency from 500MHz to 550MHz. The thermal throtling can be checked by `vcgencmd get_throttled`. The CPU temperature was under 62C and the thermal throttling was not reached. The fastest result on all cores was reached BLIS using `BLIS_JC_NT=2 BLIS_IC_NT=1 BLIS_JR_NT=1 BLIS_IR_NT=2`.
 
 #### Odroid-HC4
 
