@@ -202,10 +202,10 @@ The best FLOPs of 20 runs or more
 | SBC | cpu | GHz | cores | RAM GB | Ns | optimal NB | binary | GFLOPs | THP | FLOPs/cycle/core | temp ℃ | power W | idle ℃ | idle W |
 |-------|-----|-----|-------|--------|----|------------|--------|--------|-----|------------------|-----------|-----------|-----------|----------|
 | Raspberry3B+| A53 | 1.4  | 4 | 1 |  9600 | 160 |   a53 OpenBLAS |  9.35 |  yes | 1.67 | 49 |  | 31 | |
-| 〃          | 〃   | 〃   | 1 | 〃|       |     |        |       |  yes |     |   |  | 〃  |  〃|
+| 〃          | 〃   | 〃   | 1 | 〃|       |     |        |       |  yes |     |  38 |  | 〃  |  〃|
 | Raspberry4  | A72 | 1.8  | 4 | 8 | 28152 | 184 | a57 BLIS | 20.34 |  yes | 2.81 | 62 | 10 | 37 | 4 |
 |      〃     |  〃 |   〃  | 1 | 〃| 28080 |  240|         〃| 5.82  | yes |  3.23 | 50 | 6  |  〃| 〃 |
-| Raspberry5  | A76 | 2.4  | 4 | 8 | 28000 | 184 | firestorm BLIS | 56.63 |  yes | 5.90 | 67 | 7 |   |   |
+| Raspberry5  | A76 | 2.4  | 4 | 8 | 28000 | 184 | firestorm BLIS | 56.63 |  yes | 5.90 | 74 | 7 |   |   |
 |      〃     |  〃 |   〃  | 1 | 〃|       |     |         〃|       | yes |     |   |    |  〃| 〃 |
 | Odroid-HC4  | A55 | 1.8  | 4 | 4 | 18000 | 144 | a53/55          | 14.46 | yes | 2.01 | 63 |    |  |  | | |
 | 〃          | 〃   | 〃   | 1 | 〃|       |     |        |       |  yes |    |   |  | 〃  |  〃|
@@ -242,7 +242,7 @@ Uses the aluminium Armor Case with Dual Fan. The thermal throtling can be checke
 Uses the aluminium Armor Case with Dual Fan. To achieve 1.8GHz on newer boards, you need `arm_boost=1` in `/boot/config.txt`. You can also specify `hdmi_enable_4kp60=1`, which increases the core frequency from 500MHz to 550MHz. The thermal throtling can be checked by `vcgencmd get_throttled`. The CPU temperature was under 62C and the thermal throttling was not reached. The fastest result on all cores was reached BLIS using `BLIS_JC_NT=2 BLIS_IC_NT=1 BLIS_JR_NT=1 BLIS_IR_NT=2`.
 
 #### Raspberry Pi 5
-Uses the official cooler with PWM controlled fan. The thermal throtling can be checked by `vcgencmd get_throttled`. The CPU temperature was under 67C (fan speed 6600RPM) and the thermal throttling was not reached.
+Uses the official cooler with PWM controlled fan. The thermal throtling can be checked by `vcgencmd get_throttled`. The CPU temperature was under 74C (fan speed 6600RPM) and the thermal throttling was not reached.
 
 
 #### Odroid-HC4
