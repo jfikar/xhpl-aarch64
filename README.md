@@ -21,7 +21,7 @@ The possible TARGETs are listed in file the `TargetList.txt`. For our purpose, t
 
 We no longer need the shared libraries (so) as we link OpenBLAS statically to the final xhpl binary, the option `NO_SHARED=1` takes care of this.
 
-It is also posible to use `DYNAMIC_ARCH=1` to compile all the supported CPUs into one library. Specify the maximum number of threads by using `NUM_THREADS=8`.
+It is also posible to use `DYNAMIC_ARCH=1` to compile all the supported CPUs into one library. Specify the maximum number of threads by using `NUM_THREADS=8`. To see, what CPU is being used set the variable `OPENBLAS_VERBOSE=2`. To force a specific CPU set the variable e.g. `OPENBLAS_CORETYPE=CORTEXX1`.
 
 ```
 wget https://github.com/OpenMathLib/OpenBLAS/archive/refs/tags/v0.3.26.tar.gz
