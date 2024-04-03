@@ -9,7 +9,7 @@ The best FLOPs for ARM64 (probably for other archs as well) are usually obtained
 
 ### Compile OpenBLAS
 ```
-wget https://github.com/xianyi/OpenBLAS/archive/refs/tags/v0.3.26.tar.gz
+wget https://github.com/OpenMathLib/OpenBLAS/archive/refs/tags/v0.3.26.tar.gz
 tar xvf v0.3.26.tar.gz
 cd OpenBLAS-0.3.26
 export NO_SHARED=1
@@ -24,7 +24,7 @@ We no longer need the shared libraries (so) as we link OpenBLAS statically to th
 It is also posible to use `DYNAMIC_ARCH=1` to compile all the supported CPUs into one library. Specify the maximum number of threads by using `NUM_THREADS=8`.
 
 ```
-wget https://github.com/xianyi/OpenBLAS/archive/refs/tags/v0.3.26.tar.gz
+wget https://github.com/OpenMathLib/OpenBLAS/archive/refs/tags/v0.3.26.tar.gz
 tar xvf v0.3.26.tar.gz
 cd OpenBLAS-0.3.26
 export NO_SHARED=1
