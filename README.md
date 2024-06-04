@@ -35,9 +35,9 @@ make PREFIX=${HOME}/openblas install
 ```
 ### Alternatively compile BLIS
 ```
-wget https://github.com/flame/blis/archive/refs/tags/0.9.0.tar.gz
-tar xvf 0.9.0.tar.gz
-cd blis-0.9.0
+wget https://github.com/flame/blis/archive/refs/tags/1.0.tar.gz
+tar xvf 1.0.tar.gz
+cd blis-1.0
 ./configure -p ${HOME}/blis --disable-shared -t openmp auto
 make -j${nproc}
 make check
